@@ -1,0 +1,94 @@
+[
+  {
+    "id": "1759803058531",
+    "userId": "1759803022622",
+    "originalText": "Machine learning is a subset of artificial intelligence that enables computers to learn from data without being explicitly programmed. It involves alg...",
+    "fullTextLength": 664,
+    "results": {
+      "summary": "Machine learning is a subset of artificial intelligence that enables computers to learn from data. It involves algorithms that can identify patterns and make predictions based on input data. Common types include supervised learning, unsupervised learning, and reinforcement learning. Neural networks are a popular approach inspired by the human brain's structure and function. Deep learning uses multiple layers to progressively extract higher-level features from raw input.",
+      "quiz": [
+        {
+          "question": "What is the main topic of this text?",
+          "options": [
+            "Learning",
+            "training",
+            "training",
+            "A completely different subject"
+          ],
+          "correct": 0,
+          "explanation": "The text primarily focuses on Learning, as evidenced by the content and key terms."
+        },
+        {
+          "question": "Which of these is a key concept mentioned in the text?",
+          "options": [
+            "Machine",
+            "artificial intelligence",
+            "Unrelated concept 1",
+            "Unrelated concept 2"
+          ],
+          "correct": 0,
+          "explanation": "Machine is a key concept discussed in the material."
+        },
+        {
+          "question": "What does the text describe?",
+          "options": [
+            "A process or method",
+            "A historical event",
+            "A fictional story",
+            "A product review"
+          ],
+          "correct": 0,
+          "explanation": "The text describes a process or method based on the content structure."
+        }
+      ],
+      "flashcards": [
+        {
+          "front": "Machine",
+          "back": "Important concept in Learning."
+        },
+        {
+          "front": "learning",
+          "back": "Relates to: Common types include supervised learning, unsupervised learning, and reinforcement learning."
+        },
+        {
+          "front": "artificial",
+          "back": "Important concept in Learning."
+        },
+        {
+          "front": "intelligence",
+          "back": "Important concept in Learning."
+        }
+      ],
+      "keyPoints": [
+        {
+          "id": 1,
+          "point": "Machine learning is a subset of artificial intelligence that enables computers to learn from data without being explicitly programmed."
+        },
+        {
+          "id": 2,
+          "point": "It involves algorithms that can identify patterns and make predictions based on input data."
+        },
+        {
+          "id": 3,
+          "point": "Common types include supervised learning, unsupervised learning, and reinforcement learning."
+        },
+        {
+          "id": 4,
+          "point": "Neural networks are a popular approach inspired by the human brain's structure and function."
+        },
+        {
+          "id": 5,
+          "point": "For example, in image processing, lower layers may identify edges, while higher layers may identify concepts relevant to humans such as digits or faces."
+        }
+      ]
+    },
+    "features": [
+      "summary",
+      "quiz",
+      "flashcards",
+      "keyPoints"
+    ],
+    "timestamp": "2025-10-07T02:10:58.531Z",
+    "wordCount": 94
+  }
+]

@@ -1,0 +1,908 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Study Mate - Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background: #0f0f23;
+            color: #e0e0e0;
+            overflow-x: hidden;
+        }
+
+        #three-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        .glass-card {
+            background: rgba(17, 25, 40, 0.75);
+            backdrop-filter: blur(16px) saturate(180%);
+            -webkit-backdrop-filter: blur(16px) saturate(180%);
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.125);
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .input-field {
+            background: rgba(255, 255, 255, 0.07);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .input-field:focus {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(103, 126, 234, 0.5);
+            box-shadow: 0 0 0 3px rgba(103, 126, 234, 0.1);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .floating {
+            animation: floating 6s ease-in-out infinite;
+        }
+
+        @keyframes floating {
+            0% { transform: translate(0, 0px); }
+            50% { transform: translate(0, 15px); }
+            100% { transform: translate(0, -0px); }
+        }
+
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(102, 126, 234, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(102, 126, 234, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(102, 126, 234, 0); }
+        }
+
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .gradient-border {
+            position: relative;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 3px;
+            border-radius: 12px;
+        }
+
+        .gradient-border::after {
+            content: '';
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            right: 3px;
+            bottom: 3px;
+            background: rgba(17, 25, 40, 0.9);
+            border-radius: 9px;
+            z-index: -1;
+        }
+
+        .shimmer {
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            background-size: 200% 100%;
+            animation: shimmer 2s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
+
+        .sidebar {
+            transition: all 0.3s ease;
+        }
+
+        .sidebar-item {
+            transition: all 0.3s ease;
+            border-radius: 8px;
+        }
+
+        .sidebar-item:hover {
+            background: rgba(102, 126, 234, 0.1);
+            transform: translateX(5px);
+        }
+
+        .sidebar-item.active {
+            background: rgba(102, 126, 234, 0.2);
+            border-left: 3px solid #667eea;
+        }
+
+        .progress-ring {
+            transform: rotate(-90deg);
+        }
+
+        .progress-ring-circle {
+            transition: stroke-dashoffset 0.5s;
+            transform: rotate(90deg);
+            transform-origin: 50% 50%;
+        }
+
+        .glow {
+            box-shadow: 0 0 20px rgba(102, 126, 234, 0.5);
+        }
+
+        .text-glow {
+            text-shadow: 0 0 10px currentColor;
+        }
+
+        .slide-in {
+            animation: slideIn 0.5s ease-out;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .bounce-in {
+            animation: bounceIn 0.6s;
+        }
+
+        @keyframes bounceIn {
+            0% { transform: scale(0.1); opacity: 0; }
+            60% { transform: scale(1.2); opacity: 1; }
+            100% { transform: scale(1); }
+        }
+
+        .rotate-in {
+            animation: rotateIn 0.6s;
+        }
+
+        @keyframes rotateIn {
+            from { transform: rotate(-180deg) scale(0.1); opacity: 0; }
+            to { transform: rotate(0) scale(1); opacity: 1; }
+        }
+
+        .morph {
+            animation: morph 8s ease-in-out infinite;
+            border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+        }
+
+        @keyframes morph {
+            0% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
+            50% { border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%; }
+            100% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
+        }
+
+        .neon-text {
+            color: #fff;
+            text-shadow: 
+                0 0 5px #fff,
+                0 0 10px #fff,
+                0 0 20px #667eea,
+                0 0 40px #667eea,
+                0 0 80px #667eea;
+        }
+
+        .particle {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(102, 126, 234, 0.5);
+            animation: float 15s infinite linear;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(-1000px) rotate(720deg); opacity: 0; }
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-white min-h-screen overflow-hidden">
+    <!-- Three.js Background -->
+    <div id="three-container"></div>
+
+    <!-- Floating Particles -->
+    <div id="particles-container" class="absolute inset-0 overflow-hidden"></div>
+
+    <!-- Main Layout -->
+    <div class="flex h-screen">
+        <!-- Sidebar -->
+        <div class="sidebar w-64 bg-gray-900/80 backdrop-blur-lg border-r border-gray-800 flex flex-col">
+            <!-- Logo -->
+            <div class="p-6 border-b border-gray-800">
+                <div class="flex items-center">
+                    <div class="w-10 h-10 bg-gradient-to-r from-purple-500 to-indigo-600 rounded-xl flex items-center justify-center mr-3 glow">
+                        <i class="fas fa-graduation-cap text-white"></i>
+                    </div>
+                    <h1 class="text-xl font-bold gradient-text">AI Study Mate</h1>
+                </div>
+            </div>
+
+            <!-- User Profile -->
+            <div class="p-6 border-b border-gray-800">
+                <div class="flex items-center">
+                    <div class="w-12 h-12 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center mr-4 glow">
+                        <i class="fas fa-user text-white"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-semibold text-white">Alex Johnson</h3>
+                        <p class="text-sm text-gray-400">Computer Science</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Navigation -->
+            <div class="flex-1 p-4">
+                <nav class="space-y-2">
+                    <a href="#" class="sidebar-item active flex items-center p-3 text-white">
+                        <i class="fas fa-home mr-3 text-blue-400"></i>
+                        <span>Dashboard</span>
+                    </a>
+                    <a href="#" class="sidebar-item flex items-center p-3 text-gray-400 hover:text-white">
+                        <i class="fas fa-book mr-3 text-green-400"></i>
+                        <span>Study Materials</span>
+                    </a>
+                    <a href="#" class="sidebar-item flex items-center p-3 text-gray-400 hover:text-white">
+                        <i class="fas fa-brain mr-3 text-purple-400"></i>
+                        <span>AI Assistant</span>
+                    </a>
+                    <a href="#" class="sidebar-item flex items-center p-3 text-gray-400 hover:text-white">
+                        <i class="fas fa-question-circle mr-3 text-yellow-400"></i>
+                        <span>Quizzes</span>
+                    </a>
+                    <a href="#" class="sidebar-item flex items-center p-3 text-gray-400 hover:text-white">
+                        <i class="fas fa-chart-bar mr-3 text-red-400"></i>
+                        <span>Progress</span>
+                    </a>
+                    <a href="#" class="sidebar-item flex items-center p-3 text-gray-400 hover:text-white">
+                        <i class="fas fa-cog mr-3 text-gray-400"></i>
+                        <span>Settings</span>
+                    </a>
+                </nav>
+            </div>
+
+            <!-- Upgrade Card -->
+            <div class="p-4">
+                <div class="glass-card p-4 rounded-lg text-center">
+                    <div class="w-12 h-12 bg-gradient-to-r from-yellow-500 to-orange-500 rounded-full flex items-center justify-center mx-auto mb-3 glow">
+                        <i class="fas fa-crown text-white"></i>
+                    </div>
+                    <h4 class="font-bold text-white mb-2">Upgrade to Pro</h4>
+                    <p class="text-sm text-gray-400 mb-3">Unlock advanced features</p>
+                    <button class="btn-primary w-full text-white font-bold py-2 px-4 rounded-lg text-sm">
+                        Upgrade Now
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="flex-1 flex flex-col overflow-hidden">
+            <!-- Header -->
+            <header class="bg-gray-900/80 backdrop-blur-lg border-b border-gray-800 p-4">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center">
+                        <h2 class="text-2xl font-bold text-white">Study Dashboard</h2>
+                        <div class="ml-4 px-3 py-1 bg-blue-500/20 text-blue-400 rounded-full text-sm font-medium">
+                            <i class="fas fa-circle text-xs mr-1"></i>
+                            Active
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-center space-x-4">
+                        <!-- Search -->
+                        <div class="relative">
+                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                <i class="fas fa-search text-gray-500"></i>
+                            </div>
+                            <input 
+                                type="text" 
+                                class="input-field pl-10 pr-4 py-2 rounded-lg w-64 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                placeholder="Search...">
+                        </div>
+                        
+                        <!-- Notifications -->
+                        <button class="relative p-2 text-gray-400 hover:text-white transition-colors">
+                            <i class="fas fa-bell text-xl"></i>
+                            <span class="absolute top-0 right-0 w-3 h-3 bg-red-500 rounded-full"></span>
+                        </button>
+                        
+                        <!-- User Menu -->
+                        <div class="relative">
+                            <button class="flex items-center space-x-2 text-gray-300 hover:text-white transition-colors">
+                                <div class="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center">
+                                    <i class="fas fa-user text-white text-sm"></i>
+                                </div>
+                                <span>Alex</span>
+                                <i class="fas fa-chevron-down text-xs"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Dashboard Content -->
+            <div class="flex-1 overflow-y-auto p-6">
+                <!-- Welcome Section -->
+                <div class="mb-8">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <h1 class="text-3xl font-bold text-white mb-2">Welcome back, Alex! 👋</h1>
+                            <p class="text-gray-400">Ready to continue your learning journey?</p>
+                        </div>
+                        <div class="flex space-x-3">
+                            <button class="btn-primary text-white font-bold py-3 px-6 rounded-lg flex items-center">
+                                <i class="fas fa-plus mr-2"></i>
+                                New Study Session
+                            </button>
+                            <button class="glass-card text-white font-bold py-3 px-6 rounded-lg flex items-center border border-gray-700 hover:border-gray-600 transition-colors">
+                                <i class="fas fa-upload mr-2"></i>
+                                Upload Material
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Stats Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                    <!-- Study Time Card -->
+                    <div class="glass-card p-6 card-hover bounce-in">
+                        <div class="flex items-center justify-between mb-4">
+                            <div>
+                                <p class="text-gray-400 text-sm">Study Time</p>
+                                <h3 class="text-2xl font-bold text-white">12.5h</h3>
+                            </div>
+                            <div class="w-12 h-12 bg-blue-500/20 rounded-full flex items-center justify-center">
+                                <i class="fas fa-clock text-blue-400 text-xl"></i>
+                            </div>
+                        </div>
+                        <div class="flex items-center text-green-400 text-sm">
+                            <i class="fas fa-arrow-up mr-1"></i>
+                            <span>2.3h more than last week</span>
+                        </div>
+                    </div>
+
+                    <!-- Progress Card -->
+                    <div class="glass-card p-6 card-hover bounce-in" style="animation-delay: 0.1s">
+                        <div class="flex items-center justify-between mb-4">
+                            <div>
+                                <p class="text-gray-400 text-sm">Course Progress</p>
+                                <h3 class="text-2xl font-bold text-white">68%</h3>
+                            </div>
+                            <div class="w-12 h-12 bg-green-500/20 rounded-full flex items-center justify-center">
+                                <i class="fas fa-chart-line text-green-400 text-xl"></i>
+                            </div>
+                        </div>
+                        <div class="w-full bg-gray-700 rounded-full h-2">
+                            <div class="bg-green-500 h-2 rounded-full" style="width: 68%"></div>
+                        </div>
+                    </div>
+
+                    <!-- Quizzes Card -->
+                    <div class="glass-card p-6 card-hover bounce-in" style="animation-delay: 0.2s">
+                        <div class="flex items-center justify-between mb-4">
+                            <div>
+                                <p class="text-gray-400 text-sm">Quizzes Completed</p>
+                                <h3 class="text-2xl font-bold text-white">24</h3>
+                            </div>
+                            <div class="w-12 h-12 bg-purple-500/20 rounded-full flex items-center justify-center">
+                                <i class="fas fa-tasks text-purple-400 text-xl"></i>
+                            </div>
+                        </div>
+                        <div class="flex items-center text-green-400 text-sm">
+                            <i class="fas fa-check-circle mr-1"></i>
+                            <span>85% average score</span>
+                        </div>
+                    </div>
+
+                    <!-- Streak Card -->
+                    <div class="glass-card p-6 card-hover bounce-in" style="animation-delay: 0.3s">
+                        <div class="flex items-center justify-between mb-4">
+                            <div>
+                                <p class="text-gray-400 text-sm">Study Streak</p>
+                                <h3 class="text-2xl font-bold text-white">14 days</h3>
+                            </div>
+                            <div class="w-12 h-12 bg-orange-500/20 rounded-full flex items-center justify-center">
+                                <i class="fas fa-fire text-orange-400 text-xl"></i>
+                            </div>
+                        </div>
+                        <div class="flex items-center text-green-400 text-sm">
+                            <i class="fas fa-bolt mr-1"></i>
+                            <span>Keep going!</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Main Content Grid -->
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    <!-- Left Column -->
+                    <div class="lg:col-span-2 space-y-6">
+                        <!-- Recent Activity -->
+                        <div class="glass-card p-6 fade-in">
+                            <div class="flex items-center justify-between mb-6">
+                                <h3 class="text-xl font-bold text-white">Recent Activity</h3>
+                                <button class="text-blue-400 hover:text-blue-300 text-sm font-medium">
+                                    View All
+                                </button>
+                            </div>
+                            <div class="space-y-4">
+                                <div class="flex items-center p-4 bg-gray-800/50 rounded-lg hover:bg-gray-800/70 transition-colors">
+                                    <div class="w-10 h-10 bg-blue-500/20 rounded-full flex items-center justify-center mr-4">
+                                        <i class="fas fa-book text-blue-400"></i>
+                                    </div>
+                                    <div class="flex-1">
+                                        <h4 class="font-semibold text-white">Completed Chapter 5</h4>
+                                        <p class="text-sm text-gray-400">Data Structures & Algorithms</p>
+                                    </div>
+                                    <div class="text-right">
+                                        <p class="text-sm text-gray-400">2 hours ago</p>
+                                        <p class="text-green-400 text-sm font-medium">+25 XP</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="flex items-center p-4 bg-gray-800/50 rounded-lg hover:bg-gray-800/70 transition-colors">
+                                    <div class="w-10 h-10 bg-green-500/20 rounded-full flex items-center justify-center mr-4">
+                                        <i class="fas fa-check-circle text-green-400"></i>
+                                    </div>
+                                    <div class="flex-1">
+                                        <h4 class="font-semibold text-white">Quiz Completed</h4>
+                                        <p class="text-sm text-gray-400">Database Systems - Score: 92%</p>
+                                    </div>
+                                    <div class="text-right">
+                                        <p class="text-sm text-gray-400">5 hours ago</p>
+                                        <p class="text-green-400 text-sm font-medium">+50 XP</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="flex items-center p-4 bg-gray-800/50 rounded-lg hover:bg-gray-800/70 transition-colors">
+                                    <div class="w-10 h-10 bg-purple-500/20 rounded-full flex items-center justify-center mr-4">
+                                        <i class="fas fa-brain text-purple-400"></i>
+                                    </div>
+                                    <div class="flex-1">
+                                        <h4 class="font-semibold text-white">AI Study Session</h4>
+                                        <p class="text-sm text-gray-400">Generated flashcards for Calculus</p>
+                                    </div>
+                                    <div class="text-right">
+                                        <p class="text-sm text-gray-400">1 day ago</p>
+                                        <p class="text-green-400 text-sm font-medium">+15 XP</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="flex items-center p-4 bg-gray-800/50 rounded-lg hover:bg-gray-800/70 transition-colors">
+                                    <div class="w-10 h-10 bg-orange-500/20 rounded-full flex items-center justify-center mr-4">
+                                        <i class="fas fa-trophy text-orange-400"></i>
+                                    </div>
+                                    <div class="flex-1">
+                                        <h4 class="font-semibold text-white">Achievement Unlocked</h4>
+                                        <p class="text-sm text-gray-400">Weekend Warrior - Studied 8+ hours</p>
+                                    </div>
+                                    <div class="text-right">
+                                        <p class="text-sm text-gray-400">2 days ago</p>
+                                        <p class="text-green-400 text-sm font-medium">+100 XP</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Study Materials -->
+                        <div class="glass-card p-6 fade-in" style="animation-delay: 0.2s">
+                            <div class="flex items-center justify-between mb-6">
+                                <h3 class="text-xl font-bold text-white">Study Materials</h3>
+                                <button class="text-blue-400 hover:text-blue-300 text-sm font-medium">
+                                    Manage
+                                </button>
+                            </div>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div class="bg-gradient-to-br from-blue-500/10 to-purple-600/10 p-4 rounded-lg border border-blue-500/20 hover:border-blue-500/40 transition-colors card-hover">
+                                    <div class="flex items-center mb-3">
+                                        <div class="w-10 h-10 bg-blue-500/20 rounded-lg flex items-center justify-center mr-3">
+                                            <i class="fas fa-file-pdf text-blue-400"></i>
+                                        </div>
+                                        <div>
+                                            <h4 class="font-semibold text-white">Data Structures</h4>
+                                            <p class="text-xs text-gray-400">Updated 2 days ago</p>
+                                        </div>
+                                    </div>
+                                    <p class="text-sm text-gray-400 mb-3">Complete guide to algorithms and data structures with examples.</p>
+                                    <div class="flex justify-between items-center">
+                                        <div class="flex space-x-2">
+                                            <span class="px-2 py-1 bg-blue-500/20 text-blue-400 rounded text-xs">PDF</span>
+                                            <span class="px-2 py-1 bg-green-500/20 text-green-400 rounded text-xs">24 pages</span>
+                                        </div>
+                                        <button class="text-blue-400 hover:text-blue-300">
+                                            <i class="fas fa-download"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                
+                                <div class="bg-gradient-to-br from-green-500/10 to-blue-600/10 p-4 rounded-lg border border-green-500/20 hover:border-green-500/40 transition-colors card-hover">
+                                    <div class="flex items-center mb-3">
+                                        <div class="w-10 h-10 bg-green-500/20 rounded-lg flex items-center justify-center mr-3">
+                                            <i class="fas fa-video text-green-400"></i>
+                                        </div>
+                                        <div>
+                                            <h4 class="font-semibold text-white">Database Systems</h4>
+                                            <p class="text-xs text-gray-400">Updated 1 week ago</p>
+                                        </div>
+                                    </div>
+                                    <p class="text-sm text-gray-400 mb-3">Video lectures and notes on SQL, normalization, and transactions.</p>
+                                    <div class="flex justify-between items-center">
+                                        <div class="flex space-x-2">
+                                            <span class="px-2 py-1 bg-purple-500/20 text-purple-400 rounded text-xs">Video</span>
+                                            <span class="px-2 py-1 bg-yellow-500/20 text-yellow-400 rounded text-xs">3h 45m</span>
+                                        </div>
+                                        <button class="text-green-400 hover:text-green-300">
+                                            <i class="fas fa-play"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right Column -->
+                    <div class="space-y-6">
+                        <!-- Progress Chart -->
+                        <div class="glass-card p-6 fade-in" style="animation-delay: 0.3s">
+                            <h3 class="text-xl font-bold text-white mb-6">Weekly Progress</h3>
+                            <div class="h-64">
+                                <canvas id="progressChart"></canvas>
+                            </div>
+                        </div>
+
+                        <!-- Upcoming Deadlines -->
+                        <div class="glass-card p-6 fade-in" style="animation-delay: 0.4s">
+                            <div class="flex items-center justify-between mb-6">
+                                <h3 class="text-xl font-bold text-white">Upcoming Deadlines</h3>
+                                <button class="text-blue-400 hover:text-blue-300 text-sm font-medium">
+                                    View All
+                                </button>
+                            </div>
+                            <div class="space-y-4">
+                                <div class="flex items-center p-3 bg-red-500/10 rounded-lg border border-red-500/20">
+                                    <div class="w-10 h-10 bg-red-500/20 rounded-full flex items-center justify-center mr-3">
+                                        <i class="fas fa-exclamation text-red-400"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-semibold text-white">Final Exam</h4>
+                                        <p class="text-sm text-gray-400">Due: Tomorrow, 9:00 AM</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="flex items-center p-3 bg-yellow-500/10 rounded-lg border border-yellow-500/20">
+                                    <div class="w-10 h-10 bg-yellow-500/20 rounded-full flex items-center justify-center mr-3">
+                                        <i class="fas fa-clock text-yellow-400"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-semibold text-white">Project Submission</h4>
+                                        <p class="text-sm text-gray-400">Due: 3 days</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="flex items-center p-3 bg-blue-500/10 rounded-lg border border-blue-500/20">
+                                    <div class="w-10 h-10 bg-blue-500/20 rounded-full flex items-center justify-center mr-3">
+                                        <i class="fas fa-book text-blue-400"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-semibold text-white">Chapter Review</h4>
+                                        <p class="text-sm text-gray-400">Due: 5 days</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- AI Assistant -->
+                        <div class="glass-card p-6 fade-in" style="animation-delay: 0.5s">
+                            <div class="flex items-center mb-6">
+                                <div class="w-12 h-12 bg-gradient-to-r from-purple-500 to-pink-600 rounded-full flex items-center justify-center mr-4 glow">
+                                    <i class="fas fa-robot text-white"></i>
+                                </div>
+                                <div>
+                                    <h3 class="text-xl font-bold text-white">Study Assistant</h3>
+                                    <p class="text-sm text-gray-400">Ready to help you learn</p>
+                                </div>
+                            </div>
+                            <div class="space-y-3">
+                                <button class="w-full text-left p-3 bg-gray-800/50 rounded-lg hover:bg-gray-800/70 transition-colors flex items-center">
+                                    <i class="fas fa-question-circle text-blue-400 mr-3"></i>
+                                    <span>Generate Quiz</span>
+                                </button>
+                                <button class="w-full text-left p-3 bg-gray-800/50 rounded-lg hover:bg-gray-800/70 transition-colors flex items-center">
+                                    <i class="fas fa-lightbulb text-yellow-400 mr-3"></i>
+                                    <span>Explain Concept</span>
+                                </button>
+                                <button class="w-full text-left p-3 bg-gray-800/50 rounded-lg hover:bg-gray-800/70 transition-colors flex items-center">
+                                    <i class="fas fa-sticky-note text-green-400 mr-3"></i>
+                                    <span>Create Flashcards</span>
+                                </button>
+                                <button class="w-full text-left p-3 bg-gray-800/50 rounded-lg hover:bg-gray-800/70 transition-colors flex items-center">
+                                    <i class="fas fa-chart-pie text-purple-400 mr-3"></i>
+                                    <span>Study Analytics</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Three.js Scene for Dashboard
+        class DashboardScene {
+            constructor() {
+                this.scene = new THREE.Scene();
+                this.camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+                this.renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+                
+                this.particles = null;
+                this.mouseX = 0;
+                this.mouseY = 0;
+                
+                this.init();
+            }
+            
+            init() {
+                // Renderer setup
+                this.renderer.setSize(window.innerWidth, window.innerHeight);
+                this.renderer.setClearColor(0x000000, 0);
+                document.getElementById('three-container').appendChild(this.renderer.domElement);
+                
+                // Camera position
+                this.camera.position.z = 30;
+                
+                // Lighting
+                const ambientLight = new THREE.AmbientLight(0x404040, 0.6);
+                this.scene.add(ambientLight);
+                
+                const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
+                directionalLight.position.set(1, 1, 1);
+                this.scene.add(directionalLight);
+                
+                // Create geometric particles
+                this.createGeometricParticles();
+                
+                // Handle window resize
+                window.addEventListener('resize', () => this.onWindowResize());
+                
+                // Mouse movement
+                document.addEventListener('mousemove', (event) => {
+                    this.mouseX = (event.clientX - window.innerWidth / 2) * 0.0005;
+                    this.mouseY = (event.clientY - window.innerHeight / 2) * 0.0005;
+                });
+                
+                // Start animation
+                this.animate();
+            }
+            
+            createGeometricParticles() {
+                const geometry = new THREE.BufferGeometry();
+                const vertices = [];
+                const colors = [];
+                
+                for (let i = 0; i < 500; i++) {
+                    const x = (Math.random() - 0.5) * 100;
+                    const y = (Math.random() - 0.5) * 100;
+                    const z = (Math.random() - 0.5) * 100;
+                    
+                    vertices.push(x, y, z);
+                    
+                    // Color based on position
+                    colors.push(
+                        Math.random() * 0.3 + 0.7, // R
+                        Math.random() * 0.3 + 0.5, // G
+                        Math.random() * 0.5 + 0.5  // B
+                    );
+                }
+                
+                geometry.setAttribute('position', new THREE.Float32BufferAttribute(vertices, 3));
+                geometry.setAttribute('color', new THREE.Float32BufferAttribute(colors, 3));
+                
+                const material = new THREE.PointsMaterial({
+                    size: 3,
+                    vertexColors: true,
+                    transparent: true,
+                    opacity: 0.8
+                });
+                
+                this.particles = new THREE.Points(geometry, material);
+                this.scene.add(this.particles);
+            }
+            
+            onWindowResize() {
+                this.camera.aspect = window.innerWidth / window.innerHeight;
+                this.camera.updateProjectionMatrix();
+                this.renderer.setSize(window.innerWidth, window.innerHeight);
+            }
+            
+            animate() {
+                requestAnimationFrame(() => this.animate());
+                
+                if (this.particles) {
+                    this.particles.rotation.x += 0.001;
+                    this.particles.rotation.y += 0.002;
+                    
+                    // Subtle mouse interaction
+                    this.particles.rotation.x += this.mouseY;
+                    this.particles.rotation.y += this.mouseX;
+                }
+                
+                this.renderer.render(this.scene, this.camera);
+            }
+        }
+        
+        // Create floating particles for CSS
+        function createFloatingParticles() {
+            const container = document.getElementById('particles-container');
+            const particleCount = 30;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                
+                // Random size
+                const size = Math.random() * 4 + 1;
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                
+                // Random position
+                particle.style.left = `${Math.random() * 100}vw`;
+                particle.style.top = `${Math.random() * 100}vh`;
+                
+                // Random animation
+                const duration = Math.random() * 20 + 10;
+                const delay = Math.random() * 5;
+                particle.style.animationDuration = `${duration}s`;
+                particle.style.animationDelay = `${delay}s`;
+                
+                // Random color
+                const colors = ['rgba(102, 126, 234, 0.5)', 'rgba(118, 75, 162, 0.5)', 'rgba(76, 201, 240, 0.5)'];
+                particle.style.background = colors[Math.floor(Math.random() * colors.length)];
+                
+                container.appendChild(particle);
+            }
+        }
+        
+        // Initialize Chart.js
+        function initializeCharts() {
+            const progressCtx = document.getElementById('progressChart').getContext('2d');
+            
+            // Progress Chart
+            new Chart(progressCtx, {
+                type: 'line',
+                data: {
+                    labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                    datasets: [{
+                        label: 'Study Hours',
+                        data: [2.5, 3.2, 1.8, 4.1, 2.9, 3.7, 2.2],
+                        borderColor: '#667eea',
+                        backgroundColor: 'rgba(102, 126, 234, 0.1)',
+                        borderWidth: 2,
+                        fill: true,
+                        tension: 0.4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            grid: {
+                                color: 'rgba(255, 255, 255, 0.1)'
+                            },
+                            ticks: {
+                                color: 'rgba(255, 255, 255, 0.7)'
+                            }
+                        },
+                        x: {
+                            grid: {
+                                color: 'rgba(255, 255, 255, 0.1)'
+                            },
+                            ticks: {
+                                color: 'rgba(255, 255, 255, 0.7)'
+                            }
+                        }
+                    }
+                }
+            });
+        }
+        
+        // Initialize everything when DOM is loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize Three.js scene
+            new DashboardScene();
+            
+            // Create floating particles
+            createFloatingParticles();
+            
+            // Initialize charts
+            initializeCharts();
+            
+            // Add interactive effects to cards
+            const cards = document.querySelectorAll('.card-hover');
+            cards.forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-5px) scale(1.02)';
+                });
+                
+                card.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0) scale(1)';
+                });
+            });
+            
+            // Sidebar item interactions
+            const sidebarItems = document.querySelectorAll('.sidebar-item');
+            sidebarItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    sidebarItems.forEach(i => i.classList.remove('active'));
+                    this.classList.add('active');
+                });
+            });
+            
+            // Simulate loading states for buttons
+            const buttons = document.querySelectorAll('button');
+            buttons.forEach(button => {
+                button.addEventListener('click', function() {
+                    if (this.classList.contains('btn-primary')) {
+                        const originalHTML = this.innerHTML;
+                        this.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Loading...';
+                        this.disabled = true;
+                        
+                        setTimeout(() => {
+                            this.innerHTML = originalHTML;
+                            this.disabled = false;
+                        }, 2000);
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
