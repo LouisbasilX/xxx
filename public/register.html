@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sicon - Login</title>
+    <title>AI Study Mate - Register</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.min.js"></script>
@@ -89,22 +89,6 @@
             100% { box-shadow: 0 0 0 0 rgba(102, 126, 234, 0); }
         }
 
-        .typing-demo {
-            width: 22ch;
-            animation: typing 2s steps(22), blink .5s step-end infinite alternate;
-            white-space: nowrap;
-            overflow: hidden;
-            border-right: 3px solid;
-        }
-
-        @keyframes typing {
-            from { width: 0 }
-        }
-            
-        @keyframes blink {
-            50% { border-color: transparent }
-        }
-
         .particle {
             position: absolute;
             border-radius: 50%;
@@ -119,16 +103,6 @@
 
         .glow {
             box-shadow: 0 0 20px rgba(102, 126, 234, 0.5);
-        }
-
-        .neon-text {
-            color: #fff;
-            text-shadow: 
-                0 0 5px #fff,
-                0 0 10px #fff,
-                0 0 20px #667eea,
-                0 0 40px #667eea,
-                0 0 80px #667eea;
         }
 
         .slide-in {
@@ -159,24 +133,6 @@
             100% { transform: scale(1); }
         }
 
-        .rotate-in {
-            animation: rotateIn 1s;
-        }
-
-        @keyframes rotateIn {
-            from { transform: rotate(-180deg) scale(0.1); opacity: 0; }
-            to { transform: rotate(0) scale(1); opacity: 1; }
-        }
-
-        .card-hover {
-            transition: all 0.3s ease;
-        }
-
-        .card-hover:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-        }
-
         .gradient-border {
             position: relative;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -196,40 +152,30 @@
             z-index: -1;
         }
 
-        .shimmer {
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-            background-size: 200% 100%;
-            animation: shimmer 2s infinite;
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
         }
 
-        @keyframes shimmer {
-            0% { background-position: -200% 0; }
-            100% { background-position: 200% 0; }
+        ::-webkit-scrollbar-track {
+            background: rgba(17, 25, 40, 0.8);
+            border-radius: 4px;
         }
 
-        .morph {
-            animation: morph 8s ease-in-out infinite;
-            border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 4px;
         }
 
-        @keyframes morph {
-            0% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
-            50% { border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%; }
-            100% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(135deg, #764ba2, #667eea);
         }
 
-        .text-glow {
-            text-shadow: 0 0 10px currentColor;
-        }
-
-        .scroll-indicator {
-            animation: bounce 2s infinite;
-        }
-
-        @keyframes bounce {
-            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
-            40% { transform: translateY(-10px); }
-            60% { transform: translateY(-5px); }
+        .scroll-container {
+            max-height: 80vh;
+            overflow-y: auto;
+            scrollbar-width: thin;
+            scrollbar-color: #667eea rgba(17, 25, 40, 0.8);
         }
 
         .toast {
@@ -273,33 +219,6 @@
             transition: transform 0.3s ease;
         }
 
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-
-        ::-webkit-scrollbar-track {
-            background: rgba(17, 25, 40, 0.8);
-            border-radius: 4px;
-        }
-
-        ::-webkit-scrollbar-thumb {
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            border-radius: 4px;
-        }
-
-        ::-webkit-scrollbar-thumb:hover {
-            background: linear-gradient(135deg, #764ba2, #667eea);
-        }
-
-        .scroll-container {
-            max-height: 80vh;
-            overflow-y: auto;
-            scrollbar-width: thin;
-            scrollbar-color: #667eea rgba(17, 25, 40, 0.8);
-        }
-
-        /* Loading states */
         .loading {
             position: relative;
             overflow: hidden;
@@ -342,166 +261,118 @@
                         <div class="w-16 h-16 bg-gradient-to-r from-purple-500 to-indigo-600 rounded-2xl flex items-center justify-center mr-4 glow">
                             <i class="fas fa-graduation-cap text-white text-2xl"></i>
                         </div>
-                        <h1 class="text-4xl font-bold gradient-text">Sicon</h1>
+                        <h1 class="text-4xl font-bold gradient-text">AI Study Mate</h1>
                     </div>
                     
                     <h2 class="text-5xl font-bold mb-6 leading-tight">
-                        Your Intelligent
-                        <span class="typing-demo gradient-text">Study Companion</span>
+                        Start Your
+                        <span class="gradient-text">Learning Journey</span>
                     </h2>
                     
                     <p class="text-xl text-gray-300 mb-8 leading-relaxed">
-                        Transform your study materials into interactive learning experiences with AI-powered summaries, quizzes, flashcards, and key insights.
+                        Join thousands of students who are transforming their study experience with AI-powered learning tools.
                     </p>
 
-                    <!-- Feature Cards -->
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
-                        <div class="glass-card p-4 card-hover">
-                            <div class="flex items-center">
-                                <div class="w-10 h-10 bg-blue-500/20 rounded-lg flex items-center justify-center mr-3">
-                                    <i class="fas fa-robot text-blue-400"></i>
+                    <!-- Benefits -->
+                    <div class="glass-card p-6 mb-8">
+                        <h3 class="text-xl font-bold text-white mb-4">Why Join AI Study Mate?</h3>
+                        <div class="space-y-4">
+                            <div class="flex items-center space-x-3">
+                                <div class="w-8 h-8 bg-green-500/20 rounded-full flex items-center justify-center flex-shrink-0">
+                                    <i class="fas fa-check text-green-400"></i>
                                 </div>
-                                <div>
-                                    <h3 class="font-semibold">AI-Powered</h3>
-                                    <p class="text-sm text-gray-400">Smart content analysis</p>
-                                </div>
+                                <p class="text-gray-300">AI-powered study material generation</p>
                             </div>
-                        </div>
-                        
-                        <div class="glass-card p-4 card-hover">
-                            <div class="flex items-center">
-                                <div class="w-10 h-10 bg-green-500/20 rounded-lg flex items-center justify-center mr-3">
-                                    <i class="fas fa-brain text-green-400"></i>
+                            <div class="flex items-center space-x-3">
+                                <div class="w-8 h-8 bg-green-500/20 rounded-full flex items-center justify-center flex-shrink-0">
+                                    <i class="fas fa-check text-green-400"></i>
                                 </div>
-                                <div>
-                                    <h3 class="font-semibold">Adaptive Learning</h3>
-                                    <p class="text-sm text-gray-400">Personalized to you</p>
-                                </div>
+                                <p class="text-gray-300">Personalized learning paths</p>
                             </div>
-                        </div>
-                        
-                        <div class="glass-card p-4 card-hover">
-                            <div class="flex items-center">
-                                <div class="w-10 h-10 bg-purple-500/20 rounded-lg flex items-center justify-center mr-3">
-                                    <i class="fas fa-bolt text-purple-400"></i>
+                            <div class="flex items-center space-x-3">
+                                <div class="w-8 h-8 bg-green-500/20 rounded-full flex items-center justify-center flex-shrink-0">
+                                    <i class="fas fa-check text-green-400"></i>
                                 </div>
-                                <div>
-                                    <h3 class="font-semibold">Instant Generation</h3>
-                                    <p class="text-sm text-gray-400">Quick study materials</p>
-                                </div>
+                                <p class="text-gray-300">Progress tracking and analytics</p>
                             </div>
-                        </div>
-                        
-                        <div class="glass-card p-4 card-hover">
-                            <div class="flex items-center">
-                                <div class="w-10 h-10 bg-orange-500/20 rounded-lg flex items-center justify-center mr-3">
-                                    <i class="fas fa-chart-line text-orange-400"></i>
+                            <div class="flex items-center space-x-3">
+                                <div class="w-8 h-8 bg-green-500/20 rounded-full flex items-center justify-center flex-shrink-0">
+                                    <i class="fas fa-check text-green-400"></i>
                                 </div>
-                                <div>
-                                    <h3 class="font-semibold">Progress Tracking</h3>
-                                    <p class="text-sm text-gray-400">Monitor your growth</p>
-                                </div>
+                                <p class="text-gray-300">Interactive quizzes and flashcards</p>
                             </div>
                         </div>
                     </div>
 
                     <!-- Stats -->
-                    <div class="flex space-x-6 text-center mb-8">
-                        <div>
+                    <div class="grid grid-cols-3 gap-4 mb-8">
+                        <div class="text-center">
                             <div class="text-2xl font-bold text-blue-400">50K+</div>
                             <div class="text-sm text-gray-400">Students</div>
                         </div>
-                        <div>
-                            <div class="text-2xl font-bold text-green-400">1M+</div>
-                            <div class="text-sm text-gray-400">Study Sessions</div>
-                        </div>
-                        <div>
-                            <div class="text-2xl font-bold text-purple-400">95%</div>
+                        <div class="text-center">
+                            <div class="text-2xl font-bold text-green-400">95%</div>
                             <div class="text-sm text-gray-400">Success Rate</div>
                         </div>
-                    </div>
-
-                    <!-- Testimonials -->
-                    <div class="glass-card p-6 mb-8">
-                        <h3 class="text-xl font-bold text-white mb-4">What Our Students Say</h3>
-                        <div class="space-y-4">
-                            <div class="flex items-start space-x-3">
-                                <div class="w-10 h-10 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center flex-shrink-0">
-                                    <i class="fas fa-user text-white text-sm"></i>
-                                </div>
-                                <div>
-                                    <p class="text-gray-300 text-sm">"Sicon helped me cut my study time in half while improving my grades!"</p>
-                                    <p class="text-blue-400 text-xs mt-1">- Sarah Chen, Computer Science</p>
-                                </div>
-                            </div>
-                            <div class="flex items-start space-x-3">
-                                <div class="w-10 h-10 bg-gradient-to-r from-green-500 to-blue-600 rounded-full flex items-center justify-center flex-shrink-0">
-                                    <i class="fas fa-user text-white text-sm"></i>
-                                </div>
-                                <div>
-                                    <p class="text-gray-300 text-sm">"The flashcard generation feature is a game-changer for medical school!"</p>
-                                    <p class="text-green-400 text-xs mt-1">- Marcus Rodriguez, Medical Student</p>
-                                </div>
-                            </div>
+                        <div class="text-center">
+                            <div class="text-2xl font-bold text-purple-400">4.9★</div>
+                            <div class="text-sm text-gray-400">Rating</div>
                         </div>
                     </div>
 
-                    <!-- How It Works -->
+                    <!-- Testimonial -->
                     <div class="glass-card p-6">
-                        <h3 class="text-xl font-bold text-white mb-4">How It Works</h3>
-                        <div class="space-y-3">
-                            <div class="flex items-center space-x-3">
-                                <div class="w-8 h-8 bg-blue-500/20 rounded-full flex items-center justify-center flex-shrink-0">
-                                    <span class="text-blue-400 text-sm font-bold">1</span>
-                                </div>
-                                <p class="text-gray-300 text-sm">Upload your study materials</p>
+                        <div class="flex items-start space-x-3">
+                            <div class="w-12 h-12 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-user text-white"></i>
                             </div>
-                            <div class="flex items-center space-x-3">
-                                <div class="w-8 h-8 bg-green-500/20 rounded-full flex items-center justify-center flex-shrink-0">
-                                    <span class="text-green-400 text-sm font-bold">2</span>
-                                </div>
-                                <p class="text-gray-300 text-sm">AI analyzes and extracts key concepts</p>
-                            </div>
-                            <div class="flex items-center space-x-3">
-                                <div class="w-8 h-8 bg-purple-500/20 rounded-full flex items-center justify-center flex-shrink-0">
-                                    <span class="text-purple-400 text-sm font-bold">3</span>
-                                </div>
-                                <p class="text-gray-300 text-sm">Generate quizzes, flashcards & summaries</p>
-                            </div>
-                            <div class="flex items-center space-x-3">
-                                <div class="w-8 h-8 bg-orange-500/20 rounded-full flex items-center justify-center flex-shrink-0">
-                                    <span class="text-orange-400 text-sm font-bold">4</span>
-                                </div>
-                                <p class="text-gray-300 text-sm">Study smarter and track your progress</p>
+                            <div>
+                                <p class="text-gray-300 italic">"AI Study Mate completely transformed how I study. The AI-generated summaries and quizzes helped me ace my exams!"</p>
+                                <p class="text-blue-400 text-sm mt-2">- Emily Watson, Law Student</p>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Right Side - Login Form -->
+            <!-- Right Side - Register Form -->
             <div class="w-full lg:w-1/2">
                 <div class="gradient-border max-w-md mx-auto bounce-in">
                     <div class="glass-card p-8 rounded-lg">
                         <div class="text-center mb-8">
-                            <div class="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-r from-blue-500 to-purple-600 rounded-2xl mb-4 glow floating">
-                                <i class="fas fa-graduation-cap text-white text-3xl"></i>
+                            <div class="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-r from-green-500 to-blue-600 rounded-2xl mb-4 glow floating">
+                                <i class="fas fa-user-plus text-white text-3xl"></i>
                             </div>
-                            <h1 class="text-3xl font-bold text-white mb-2">Welcome Back</h1>
-                            <p class="text-gray-400">Sign in to continue your learning journey</p>
+                            <h1 class="text-3xl font-bold text-white mb-2">Create Account</h1>
+                            <p class="text-gray-400">Join our community of learners</p>
                         </div>
 
-                        <!-- Login Form -->
-                        <form id="login-form" class="space-y-6">
+                        <!-- Register Form -->
+                        <form id="register-form" class="space-y-6">
                             <div>
-                                <label for="login-email" class="block text-sm font-medium text-gray-300 mb-2">Email Address</label>
+                                <label for="register-name" class="block text-sm font-medium text-gray-300 mb-2">Full Name</label>
+                                <div class="relative">
+                                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                        <i class="fas fa-user text-gray-500"></i>
+                                    </div>
+                                    <input 
+                                        type="text" 
+                                        id="register-name" 
+                                        required
+                                        class="input-field w-full pl-10 pr-4 py-3 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                        placeholder="Enter your full name">
+                                </div>
+                            </div>
+
+                            <div>
+                                <label for="register-email" class="block text-sm font-medium text-gray-300 mb-2">Email Address</label>
                                 <div class="relative">
                                     <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                                         <i class="fas fa-envelope text-gray-500"></i>
                                     </div>
                                     <input 
                                         type="email" 
-                                        id="login-email" 
+                                        id="register-email" 
                                         required
                                         class="input-field w-full pl-10 pr-4 py-3 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
                                         placeholder="Enter your email">
@@ -509,62 +380,61 @@
                             </div>
 
                             <div>
-                                <label for="login-password" class="block text-sm font-medium text-gray-300 mb-2">Password</label>
+                                <label for="register-password" class="block text-sm font-medium text-gray-300 mb-2">Password</label>
                                 <div class="relative">
                                     <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                                         <i class="fas fa-lock text-gray-500"></i>
                                     </div>
                                     <input 
                                         type="password" 
-                                        id="login-password" 
+                                        id="register-password" 
+                                        required
+                                        minlength="6"
+                                        class="input-field w-full pl-10 pr-10 py-3 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                        placeholder="Create a password">
+                                    <button type="button" class="absolute inset-y-0 right-0 pr-3 flex items-center toggle-password">
+                                        <i class="fas fa-eye text-gray-500 hover:text-gray-400"></i>
+                                    </button>
+                                </div>
+                                <p class="text-xs text-gray-400 mt-1">Password must be at least 6 characters long</p>
+                            </div>
+
+                            <div>
+                                <label for="register-confirm-password" class="block text-sm font-medium text-gray-300 mb-2">Confirm Password</label>
+                                <div class="relative">
+                                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                        <i class="fas fa-lock text-gray-500"></i>
+                                    </div>
+                                    <input 
+                                        type="password" 
+                                        id="register-confirm-password" 
                                         required
                                         class="input-field w-full pl-10 pr-10 py-3 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                        placeholder="Enter your password">
+                                        placeholder="Confirm your password">
                                     <button type="button" class="absolute inset-y-0 right-0 pr-3 flex items-center toggle-password">
                                         <i class="fas fa-eye text-gray-500 hover:text-gray-400"></i>
                                     </button>
                                 </div>
                             </div>
 
-                            <div class="flex items-center justify-between">
-                                <label class="flex items-center">
-                                    <input type="checkbox" id="remember-me" class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-600 rounded bg-gray-800">
-                                    <span class="ml-2 text-sm text-gray-300">Remember me</span>
+                            <div class="flex items-start space-x-3">
+                                <input type="checkbox" id="agree-terms" required class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-600 rounded bg-gray-800 mt-1">
+                                <label for="agree-terms" class="text-sm text-gray-300">
+                                    I agree to the <a href="#" class="text-blue-400 hover:text-blue-300">Terms of Service</a> and <a href="#" class="text-blue-400 hover:text-blue-300">Privacy Policy</a>
                                 </label>
-                                <a href="#" class="text-sm text-blue-400 hover:text-blue-300 transition-colors">Forgot password?</a>
                             </div>
 
                             <button 
                                 type="submit"
                                 class="btn-primary w-full text-white font-bold py-3 px-4 rounded-lg transition-all duration-300 transform hover:scale-105 pulse">
-                                <i class="fas fa-sign-in-alt mr-2"></i>
-                                Sign In
+                                <i class="fas fa-user-plus mr-2"></i>
+                                Create Account
                             </button>
 
-                            <div class="relative my-6">
-                                <div class="absolute inset-0 flex items-center">
-                                    <div class="w-full border-t border-gray-600"></div>
-                                </div>
-                                <div class="relative flex justify-center text-sm">
-                                    <span class="px-2 bg-gray-900 text-gray-400">Or continue with</span>
-                                </div>
-                            </div>
-
-                            <div class="grid grid-cols-2 gap-4">
-                                <button type="button" class="flex items-center justify-center py-3 px-4 border border-gray-600 rounded-lg hover:bg-gray-800 transition-colors social-login" data-provider="google">
-                                    <i class="fab fa-google text-red-400 mr-2"></i>
-                                    <span>Google</span>
-                                </button>
-                                <button type="button" class="flex items-center justify-center py-3 px-4 border border-gray-600 rounded-lg hover:bg-gray-800 transition-colors social-login" data-provider="github">
-                                    <i class="fab fa-github text-gray-400 mr-2"></i>
-                                    <span>GitHub</span>
-                                </button>
-                            </div>
-
-                            <div class="text-center mt-6">
+                            <div class="text-center">
                                 <p class="text-gray-400">
-                                    Don't have an account?
-                                    <a href="register.html" class="text-blue-400 hover:text-blue-300 font-medium transition-colors">Create Account</a>
+                                    Already have an account?
+                                    <a href="login.html" class="text-blue-400 hover:text-blue-300 font-medium transition-colors">Sign In</a>
                                 </p>
                             </div>
                         </form>
@@ -573,20 +443,6 @@
             </div>
         </div>
     </div>
-
-    <!-- Scroll Indicator -->
-    <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 scroll-indicator hidden lg:block">
-        <div class="w-6 h-10 border-2 border-gray-400 rounded-full flex justify-center">
-            <div class="w-1 h-3 bg-gray-400 rounded-full mt-2"></div>
-        </div>
-    </div>
-
-    <!-- Footer -->
-    <footer class="absolute bottom-0 w-full py-4 text-center text-gray-500 text-sm">
-        <div class="container mx-auto px-4">
-            <p>&copy; 2024 Sicon. All rights reserved. | <a href="#" class="text-blue-400 hover:text-blue-300 transition-colors">Privacy Policy</a> | <a href="#" class="text-blue-400 hover:text-blue-300 transition-colors">Terms of Service</a></p>
-        </div>
-    </footer>
 
     <script>
         // API Configuration
@@ -613,16 +469,12 @@
 
                 this.container.appendChild(toast);
 
-                // Animate in
                 setTimeout(() => toast.classList.add('show'), 100);
-
-                // Animate progress bar
                 setTimeout(() => {
                     const progressBar = toast.querySelector('.progress-bar');
                     progressBar.style.transform = 'scaleX(1)';
                 }, 100);
 
-                // Auto remove
                 const removeToast = () => {
                     toast.classList.remove('show');
                     setTimeout(() => {
@@ -632,10 +484,7 @@
                     }, 300);
                 };
 
-                // Close button
                 toast.querySelector('.toast-close').addEventListener('click', removeToast);
-
-                // Auto remove after duration
                 setTimeout(removeToast, duration);
             }
         }
@@ -646,84 +495,43 @@
                 this.toastManager = new ToastManager();
             }
 
-            async login(email, password) {
+            async register(userData) {
                 try {
-                    const response = await fetch(`${API_BASE_URL}/auth/login`, {
+                    const response = await fetch(`${API_BASE_URL}/auth/register`, {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
                         },
-                        body: JSON.stringify({ email, password })
+                        body: JSON.stringify(userData)
                     });
 
                     const data = await response.json();
 
                     if (!response.ok) {
-                        throw new Error(data.error || 'Login failed');
+                        throw new Error(data.error || 'Registration failed');
                     }
 
                     return data;
                 } catch (error) {
-                    console.error('Login error:', error);
+                    console.error('Registration error:', error);
                     throw error;
                 }
             }
 
-            async verifyToken(token) {
-                try {
-                    const response = await fetch(`${API_BASE_URL}/auth/verify`, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify({ token })
-                    });
-
-                    return await response.json();
-                } catch (error) {
-                    console.error('Token verification error:', error);
-                    return { success: false, error: 'Token verification failed' };
-                }
-            }
-
-            storeUserData(user, token, rememberMe = false) {
+            storeUserData(user, token) {
                 localStorage.setItem('studyMateToken', token);
                 localStorage.setItem('studyMateUser', JSON.stringify(user));
-                
-                if (rememberMe) {
-                    localStorage.setItem('studyMateRememberMe', 'true');
-                } else {
-                    localStorage.removeItem('studyMateRememberMe');
-                }
-            }
-
-            getStoredUserData() {
-                const token = localStorage.getItem('studyMateToken');
-                const user = localStorage.getItem('studyMateUser');
-                
-                if (token && user) {
-                    return {
-                        token,
-                        user: JSON.parse(user)
-                    };
-                }
-                return null;
-            }
-
-            clearUserData() {
-                localStorage.removeItem('studyMateToken');
-                localStorage.removeItem('studyMateUser');
-                localStorage.removeItem('studyMateRememberMe');
             }
 
             isLoggedIn() {
-                const data = this.getStoredUserData();
-                return !!data;
+                const token = localStorage.getItem('studyMateToken');
+                const user = localStorage.getItem('studyMateUser');
+                return !!(token && user);
             }
         }
 
-        // Three.js Scene Setup
-        class LoginScene {
+        // Three.js Scene
+        class RegisterScene {
             constructor() {
                 this.scene = new THREE.Scene();
                 this.camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
@@ -737,15 +545,12 @@
             }
             
             init() {
-                // Renderer setup
                 this.renderer.setSize(window.innerWidth, window.innerHeight);
                 this.renderer.setClearColor(0x000000, 0);
                 document.getElementById('three-container').appendChild(this.renderer.domElement);
                 
-                // Camera position
                 this.camera.position.z = 50;
                 
-                // Lighting
                 const ambientLight = new THREE.AmbientLight(0x404040, 0.6);
                 this.scene.add(ambientLight);
                 
@@ -753,19 +558,14 @@
                 directionalLight.position.set(1, 1, 1);
                 this.scene.add(directionalLight);
                 
-                // Create particles
                 this.createParticles();
                 
-                // Handle window resize
                 window.addEventListener('resize', () => this.onWindowResize());
-                
-                // Mouse movement
                 document.addEventListener('mousemove', (event) => {
                     this.mouseX = (event.clientX - window.innerWidth / 2) * 0.0005;
                     this.mouseY = (event.clientY - window.innerHeight / 2) * 0.0005;
                 });
                 
-                // Start animation
                 this.animate();
             }
             
@@ -780,12 +580,10 @@
                     const z = (Math.random() - 0.5) * 200;
                     
                     vertices.push(x, y, z);
-                    
-                    // Color based on position
                     colors.push(
-                        Math.random() * 0.5 + 0.5, // R
-                        Math.random() * 0.3 + 0.7, // G
-                        Math.random() * 0.5 + 0.5  // B
+                        Math.random() * 0.5 + 0.5,
+                        Math.random() * 0.3 + 0.7,
+                        Math.random() * 0.5 + 0.5
                     );
                 }
                 
@@ -815,8 +613,6 @@
                 if (this.particles) {
                     this.particles.rotation.x += 0.001;
                     this.particles.rotation.y += 0.002;
-                    
-                    // Subtle mouse interaction
                     this.particles.rotation.x += this.mouseY;
                     this.particles.rotation.y += this.mouseX;
                 }
@@ -825,7 +621,6 @@
             }
         }
         
-        // Create floating particles for CSS
         function createFloatingParticles() {
             const container = document.getElementById('particles-container');
             const particleCount = 50;
@@ -834,22 +629,17 @@
                 const particle = document.createElement('div');
                 particle.className = 'particle';
                 
-                // Random size
                 const size = Math.random() * 6 + 2;
                 particle.style.width = `${size}px`;
                 particle.style.height = `${size}px`;
-                
-                // Random position
                 particle.style.left = `${Math.random() * 100}vw`;
                 particle.style.top = `${Math.random() * 100}vh`;
                 
-                // Random animation
                 const duration = Math.random() * 20 + 10;
                 const delay = Math.random() * 5;
                 particle.style.animationDuration = `${duration}s`;
                 particle.style.animationDelay = `${delay}s`;
                 
-                // Random color
                 const colors = ['rgba(102, 126, 234, 0.7)', 'rgba(118, 75, 162, 0.7)', 'rgba(76, 201, 240, 0.7)'];
                 particle.style.background = colors[Math.floor(Math.random() * colors.length)];
                 
@@ -857,12 +647,10 @@
             }
         }
 
-        // Form handling
         document.addEventListener('DOMContentLoaded', function() {
-            // Initialize systems
             const authService = new AuthService();
             const toastManager = new ToastManager();
-            new LoginScene();
+            new RegisterScene();
             createFloatingParticles();
 
             // Check if user is already logged in
@@ -889,42 +677,54 @@
                 });
             });
 
-            // Login form submission
-            const loginForm = document.getElementById('login-form');
-            loginForm.addEventListener('submit', async function(e) {
+            // Register form submission
+            const registerForm = document.getElementById('register-form');
+            registerForm.addEventListener('submit', async function(e) {
                 e.preventDefault();
                 
-                const email = document.getElementById('login-email').value;
-                const password = document.getElementById('login-password').value;
-                const rememberMe = document.getElementById('remember-me').checked;
+                const name = document.getElementById('register-name').value;
+                const email = document.getElementById('register-email').value;
+                const password = document.getElementById('register-password').value;
+                const confirmPassword = document.getElementById('register-confirm-password').value;
                 
+                // Validation
+                if (password !== confirmPassword) {
+                    toastManager.show('Passwords do not match', 'error');
+                    return;
+                }
+
+                if (password.length < 6) {
+                    toastManager.show('Password must be at least 6 characters long', 'error');
+                    return;
+                }
+
                 const submitBtn = this.querySelector('button[type="submit"]');
                 const originalText = submitBtn.innerHTML;
                 
                 // Show loading state
-                submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Signing In...';
+                submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Creating Account...';
                 submitBtn.disabled = true;
                 submitBtn.classList.add('loading');
                 
                 try {
                     // Call actual backend API
-                    const result = await authService.login(email, password);
+                    const result = await authService.register({ name, email, password });
                     
                     if (result.success) {
                         // Store user data
-                        authService.storeUserData(result.user, result.token, rememberMe);
+                        authService.storeUserData(result.user, result.token);
                         
-                        toastManager.show('Login successful! Redirecting...', 'success');
+                        toastManager.show('Account created successfully! Redirecting...', 'success');
                         
                         // Redirect to dashboard
                         setTimeout(() => {
                             window.location.href = 'dashboard.html';
                         }, 1500);
                     } else {
-                        throw new Error(result.error || 'Login failed');
+                        throw new Error(result.error || 'Registration failed');
                     }
                 } catch (error) {
-                    console.error('Login error:', error);
+                    console.error('Registration error:', error);
                     toastManager.show(error.message, 'error');
                     submitBtn.innerHTML = originalText;
                     submitBtn.disabled = false;
@@ -932,60 +732,8 @@
                 }
             });
 
-            // Social login handlers
-            document.querySelectorAll('.social-login').forEach(button => {
-                button.addEventListener('click', function() {
-                    const provider = this.dataset.provider;
-                    toastManager.show(`${provider} login is not yet implemented`, 'warning');
-                });
-            });
-
-            // Add interactive effects to cards
-            const cards = document.querySelectorAll('.card-hover');
-            cards.forEach(card => {
-                card.addEventListener('mouseenter', function() {
-                    this.style.transform = 'translateY(-10px) scale(1.02)';
-                });
-                
-                card.addEventListener('mouseleave', function() {
-                    this.style.transform = 'translateY(0) scale(1)';
-                });
-            });
-            
-            // Add typing effect
-            const typingElement = document.querySelector('.typing-demo');
-            if (typingElement) {
-                const text = typingElement.textContent;
-                typingElement.textContent = '';
-                typingElement.style.width = '0';
-                
-                setTimeout(() => {
-                    let i = 0;
-                    const typing = setInterval(() => {
-                        if (i < text.length) {
-                            typingElement.textContent += text.charAt(i);
-                            i++;
-                        } else {
-                            clearInterval(typing);
-                        }
-                    }, 100);
-                }, 1000);
-            }
-
-            // Smooth scroll to form on mobile
-            if (window.innerWidth < 1024) {
-                const scrollIndicator = document.querySelector('.scroll-indicator');
-                if (scrollIndicator) {
-                    scrollIndicator.addEventListener('click', () => {
-                        document.querySelector('.gradient-border').scrollIntoView({ 
-                            behavior: 'smooth' 
-                        });
-                    });
-                }
-            }
-
-            // Auto-focus email field
-            document.getElementById('login-email').focus();
+            // Auto-focus name field
+            document.getElementById('register-name').focus();
         });
     </script>
 </body>

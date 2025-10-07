@@ -32,6 +32,18 @@
             width: 100%;
             height: 100%;
             z-index: -1;
+            opacity: 0.3; /* Reduced opacity for background */
+        }
+
+        #three-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            backdrop-filter: blur(8px); /* Blur effect for background */
+            -webkit-backdrop-filter: blur(8px);
         }
 
         .glass-card {
@@ -132,6 +144,21 @@
 
         .sidebar {
             transition: all 0.3s ease;
+            overflow-y: auto;
+        }
+
+        .sidebar::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .sidebar::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 3px;
+        }
+
+        .sidebar::-webkit-scrollbar-thumb {
+            background: rgba(102, 126, 234, 0.5);
+            border-radius: 3px;
         }
 
         .sidebar-item {
@@ -228,7 +255,7 @@
         .particle {
             position: absolute;
             border-radius: 50%;
-            background: rgba(102, 126, 234, 0.5);
+            background: rgba(102, 126, 234, 0.3);
             animation: float 15s infinite linear;
         }
 
@@ -236,11 +263,31 @@
             0% { transform: translateY(0) rotate(0deg); opacity: 1; }
             100% { transform: translateY(-1000px) rotate(720deg); opacity: 0; }
         }
+
+        /* Custom scrollbar for main content */
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 4px;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: rgba(102, 126, 234, 0.5);
+            border-radius: 4px;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: rgba(102, 126, 234, 0.7);
+        }
     </style>
 </head>
 <body class="bg-gray-900 text-white min-h-screen overflow-hidden">
     <!-- Three.js Background -->
     <div id="three-container"></div>
+    <div id="three-overlay"></div>
 
     <!-- Floating Particles -->
     <div id="particles-container" class="absolute inset-0 overflow-hidden"></div>
@@ -266,8 +313,8 @@
                         <i class="fas fa-user text-white"></i>
                     </div>
                     <div>
-                        <h3 class="font-semibold text-white">Alex Johnson</h3>
-                        <p class="text-sm text-gray-400">Computer Science</p>
+                        <h3 class="font-semibold text-white" id="user-name">Loading...</h3>
+                        <p class="text-sm text-gray-400" id="user-major">Loading...</p>
                     </div>
                 </div>
             </div>
@@ -354,7 +401,7 @@
                                 <div class="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center">
                                     <i class="fas fa-user text-white text-sm"></i>
                                 </div>
-                                <span>Alex</span>
+                                <span id="header-user-name">Loading...</span>
                                 <i class="fas fa-chevron-down text-xs"></i>
                             </button>
                         </div>
@@ -363,13 +410,13 @@
             </header>
 
             <!-- Dashboard Content -->
-            <div class="flex-1 overflow-y-auto p-6">
+            <div class="flex-1 overflow-y-auto p-6 custom-scrollbar">
                 <!-- Welcome Section -->
                 <div class="mb-8">
                     <div class="flex items-center justify-between">
                         <div>
-                            <h1 class="text-3xl font-bold text-white mb-2">Welcome back, Alex! 👋</h1>
-                            <p class="text-gray-400">Ready to continue your learning journey?</p>
+                            <h1 class="text-3xl font-bold text-white mb-2" id="welcome-message">Welcome back! 👋</h1>
+                            <p class="text-gray-400" id="welcome-subtitle">Ready to continue your learning journey?</p>
                         </div>
                         <div class="flex space-x-3">
                             <button class="btn-primary text-white font-bold py-3 px-6 rounded-lg flex items-center">
@@ -391,15 +438,15 @@
                         <div class="flex items-center justify-between mb-4">
                             <div>
                                 <p class="text-gray-400 text-sm">Study Time</p>
-                                <h3 class="text-2xl font-bold text-white">12.5h</h3>
+                                <h3 class="text-2xl font-bold text-white" id="study-time">0h</h3>
                             </div>
                             <div class="w-12 h-12 bg-blue-500/20 rounded-full flex items-center justify-center">
                                 <i class="fas fa-clock text-blue-400 text-xl"></i>
                             </div>
                         </div>
-                        <div class="flex items-center text-green-400 text-sm">
+                        <div class="flex items-center text-green-400 text-sm" id="study-time-change">
                             <i class="fas fa-arrow-up mr-1"></i>
-                            <span>2.3h more than last week</span>
+                            <span>Loading...</span>
                         </div>
                     </div>
 
@@ -408,14 +455,14 @@
                         <div class="flex items-center justify-between mb-4">
                             <div>
                                 <p class="text-gray-400 text-sm">Course Progress</p>
-                                <h3 class="text-2xl font-bold text-white">68%</h3>
+                                <h3 class="text-2xl font-bold text-white" id="course-progress">0%</h3>
                             </div>
                             <div class="w-12 h-12 bg-green-500/20 rounded-full flex items-center justify-center">
                                 <i class="fas fa-chart-line text-green-400 text-xl"></i>
                             </div>
                         </div>
                         <div class="w-full bg-gray-700 rounded-full h-2">
-                            <div class="bg-green-500 h-2 rounded-full" style="width: 68%"></div>
+                            <div class="bg-green-500 h-2 rounded-full" id="progress-bar" style="width: 0%"></div>
                         </div>
                     </div>
 
@@ -424,15 +471,15 @@
                         <div class="flex items-center justify-between mb-4">
                             <div>
                                 <p class="text-gray-400 text-sm">Quizzes Completed</p>
-                                <h3 class="text-2xl font-bold text-white">24</h3>
+                                <h3 class="text-2xl font-bold text-white" id="quizzes-completed">0</h3>
                             </div>
                             <div class="w-12 h-12 bg-purple-500/20 rounded-full flex items-center justify-center">
                                 <i class="fas fa-tasks text-purple-400 text-xl"></i>
                             </div>
                         </div>
-                        <div class="flex items-center text-green-400 text-sm">
+                        <div class="flex items-center text-green-400 text-sm" id="quiz-average">
                             <i class="fas fa-check-circle mr-1"></i>
-                            <span>85% average score</span>
+                            <span>Loading...</span>
                         </div>
                     </div>
 
@@ -441,7 +488,7 @@
                         <div class="flex items-center justify-between mb-4">
                             <div>
                                 <p class="text-gray-400 text-sm">Study Streak</p>
-                                <h3 class="text-2xl font-bold text-white">14 days</h3>
+                                <h3 class="text-2xl font-bold text-white" id="study-streak">0 days</h3>
                             </div>
                             <div class="w-12 h-12 bg-orange-500/20 rounded-full flex items-center justify-center">
                                 <i class="fas fa-fire text-orange-400 text-xl"></i>
@@ -449,7 +496,7 @@
                         </div>
                         <div class="flex items-center text-green-400 text-sm">
                             <i class="fas fa-bolt mr-1"></i>
-                            <span>Keep going!</span>
+                            <span id="streak-message">Keep going!</span>
                         </div>
                     </div>
                 </div>
@@ -466,62 +513,8 @@
                                     View All
                                 </button>
                             </div>
-                            <div class="space-y-4">
-                                <div class="flex items-center p-4 bg-gray-800/50 rounded-lg hover:bg-gray-800/70 transition-colors">
-                                    <div class="w-10 h-10 bg-blue-500/20 rounded-full flex items-center justify-center mr-4">
-                                        <i class="fas fa-book text-blue-400"></i>
-                                    </div>
-                                    <div class="flex-1">
-                                        <h4 class="font-semibold text-white">Completed Chapter 5</h4>
-                                        <p class="text-sm text-gray-400">Data Structures & Algorithms</p>
-                                    </div>
-                                    <div class="text-right">
-                                        <p class="text-sm text-gray-400">2 hours ago</p>
-                                        <p class="text-green-400 text-sm font-medium">+25 XP</p>
-                                    </div>
-                                </div>
-                                
-                                <div class="flex items-center p-4 bg-gray-800/50 rounded-lg hover:bg-gray-800/70 transition-colors">
-                                    <div class="w-10 h-10 bg-green-500/20 rounded-full flex items-center justify-center mr-4">
-                                        <i class="fas fa-check-circle text-green-400"></i>
-                                    </div>
-                                    <div class="flex-1">
-                                        <h4 class="font-semibold text-white">Quiz Completed</h4>
-                                        <p class="text-sm text-gray-400">Database Systems - Score: 92%</p>
-                                    </div>
-                                    <div class="text-right">
-                                        <p class="text-sm text-gray-400">5 hours ago</p>
-                                        <p class="text-green-400 text-sm font-medium">+50 XP</p>
-                                    </div>
-                                </div>
-                                
-                                <div class="flex items-center p-4 bg-gray-800/50 rounded-lg hover:bg-gray-800/70 transition-colors">
-                                    <div class="w-10 h-10 bg-purple-500/20 rounded-full flex items-center justify-center mr-4">
-                                        <i class="fas fa-brain text-purple-400"></i>
-                                    </div>
-                                    <div class="flex-1">
-                                        <h4 class="font-semibold text-white">AI Study Session</h4>
-                                        <p class="text-sm text-gray-400">Generated flashcards for Calculus</p>
-                                    </div>
-                                    <div class="text-right">
-                                        <p class="text-sm text-gray-400">1 day ago</p>
-                                        <p class="text-green-400 text-sm font-medium">+15 XP</p>
-                                    </div>
-                                </div>
-                                
-                                <div class="flex items-center p-4 bg-gray-800/50 rounded-lg hover:bg-gray-800/70 transition-colors">
-                                    <div class="w-10 h-10 bg-orange-500/20 rounded-full flex items-center justify-center mr-4">
-                                        <i class="fas fa-trophy text-orange-400"></i>
-                                    </div>
-                                    <div class="flex-1">
-                                        <h4 class="font-semibold text-white">Achievement Unlocked</h4>
-                                        <p class="text-sm text-gray-400">Weekend Warrior - Studied 8+ hours</p>
-                                    </div>
-                                    <div class="text-right">
-                                        <p class="text-sm text-gray-400">2 days ago</p>
-                                        <p class="text-green-400 text-sm font-medium">+100 XP</p>
-                                    </div>
-                                </div>
+                            <div class="space-y-4" id="recent-activity">
+                                <!-- Activity items will be populated by JavaScript -->
                             </div>
                         </div>
 
@@ -533,50 +526,8 @@
                                     Manage
                                 </button>
                             </div>
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                <div class="bg-gradient-to-br from-blue-500/10 to-purple-600/10 p-4 rounded-lg border border-blue-500/20 hover:border-blue-500/40 transition-colors card-hover">
-                                    <div class="flex items-center mb-3">
-                                        <div class="w-10 h-10 bg-blue-500/20 rounded-lg flex items-center justify-center mr-3">
-                                            <i class="fas fa-file-pdf text-blue-400"></i>
-                                        </div>
-                                        <div>
-                                            <h4 class="font-semibold text-white">Data Structures</h4>
-                                            <p class="text-xs text-gray-400">Updated 2 days ago</p>
-                                        </div>
-                                    </div>
-                                    <p class="text-sm text-gray-400 mb-3">Complete guide to algorithms and data structures with examples.</p>
-                                    <div class="flex justify-between items-center">
-                                        <div class="flex space-x-2">
-                                            <span class="px-2 py-1 bg-blue-500/20 text-blue-400 rounded text-xs">PDF</span>
-                                            <span class="px-2 py-1 bg-green-500/20 text-green-400 rounded text-xs">24 pages</span>
-                                        </div>
-                                        <button class="text-blue-400 hover:text-blue-300">
-                                            <i class="fas fa-download"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                                
-                                <div class="bg-gradient-to-br from-green-500/10 to-blue-600/10 p-4 rounded-lg border border-green-500/20 hover:border-green-500/40 transition-colors card-hover">
-                                    <div class="flex items-center mb-3">
-                                        <div class="w-10 h-10 bg-green-500/20 rounded-lg flex items-center justify-center mr-3">
-                                            <i class="fas fa-video text-green-400"></i>
-                                        </div>
-                                        <div>
-                                            <h4 class="font-semibold text-white">Database Systems</h4>
-                                            <p class="text-xs text-gray-400">Updated 1 week ago</p>
-                                        </div>
-                                    </div>
-                                    <p class="text-sm text-gray-400 mb-3">Video lectures and notes on SQL, normalization, and transactions.</p>
-                                    <div class="flex justify-between items-center">
-                                        <div class="flex space-x-2">
-                                            <span class="px-2 py-1 bg-purple-500/20 text-purple-400 rounded text-xs">Video</span>
-                                            <span class="px-2 py-1 bg-yellow-500/20 text-yellow-400 rounded text-xs">3h 45m</span>
-                                        </div>
-                                        <button class="text-green-400 hover:text-green-300">
-                                            <i class="fas fa-play"></i>
-                                        </button>
-                                    </div>
-                                </div>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="study-materials">
+                                <!-- Study materials will be populated by JavaScript -->
                             </div>
                         </div>
                     </div>
@@ -599,36 +550,8 @@
                                     View All
                                 </button>
                             </div>
-                            <div class="space-y-4">
-                                <div class="flex items-center p-3 bg-red-500/10 rounded-lg border border-red-500/20">
-                                    <div class="w-10 h-10 bg-red-500/20 rounded-full flex items-center justify-center mr-3">
-                                        <i class="fas fa-exclamation text-red-400"></i>
-                                    </div>
-                                    <div>
-                                        <h4 class="font-semibold text-white">Final Exam</h4>
-                                        <p class="text-sm text-gray-400">Due: Tomorrow, 9:00 AM</p>
-                                    </div>
-                                </div>
-                                
-                                <div class="flex items-center p-3 bg-yellow-500/10 rounded-lg border border-yellow-500/20">
-                                    <div class="w-10 h-10 bg-yellow-500/20 rounded-full flex items-center justify-center mr-3">
-                                        <i class="fas fa-clock text-yellow-400"></i>
-                                    </div>
-                                    <div>
-                                        <h4 class="font-semibold text-white">Project Submission</h4>
-                                        <p class="text-sm text-gray-400">Due: 3 days</p>
-                                    </div>
-                                </div>
-                                
-                                <div class="flex items-center p-3 bg-blue-500/10 rounded-lg border border-blue-500/20">
-                                    <div class="w-10 h-10 bg-blue-500/20 rounded-full flex items-center justify-center mr-3">
-                                        <i class="fas fa-book text-blue-400"></i>
-                                    </div>
-                                    <div>
-                                        <h4 class="font-semibold text-white">Chapter Review</h4>
-                                        <p class="text-sm text-gray-400">Due: 5 days</p>
-                                    </div>
-                                </div>
+                            <div class="space-y-4" id="upcoming-deadlines">
+                                <!-- Deadlines will be populated by JavaScript -->
                             </div>
                         </div>
 
@@ -669,6 +592,100 @@
     </div>
 
     <script>
+        // User data simulation
+        const userData = {
+            name: "Alex Johnson",
+            major: "Computer Science",
+            studyTime: "12.5h",
+            studyTimeChange: "+2.3h more than last week",
+            courseProgress: 68,
+            quizzesCompleted: 24,
+            quizAverage: "85% average score",
+            studyStreak: 14,
+            streakMessage: "Keep going!",
+            recentActivity: [
+                {
+                    type: "completed",
+                    icon: "book",
+                    color: "blue",
+                    title: "Completed Chapter 5",
+                    subtitle: "Data Structures & Algorithms",
+                    time: "2 hours ago",
+                    xp: "+25 XP"
+                },
+                {
+                    type: "quiz",
+                    icon: "check-circle",
+                    color: "green",
+                    title: "Quiz Completed",
+                    subtitle: "Database Systems - Score: 92%",
+                    time: "5 hours ago",
+                    xp: "+50 XP"
+                },
+                {
+                    type: "ai",
+                    icon: "brain",
+                    color: "purple",
+                    title: "AI Study Session",
+                    subtitle: "Generated flashcards for Calculus",
+                    time: "1 day ago",
+                    xp: "+15 XP"
+                },
+                {
+                    type: "achievement",
+                    icon: "trophy",
+                    color: "orange",
+                    title: "Achievement Unlocked",
+                    subtitle: "Weekend Warrior - Studied 8+ hours",
+                    time: "2 days ago",
+                    xp: "+100 XP"
+                }
+            ],
+            studyMaterials: [
+                {
+                    title: "Data Structures",
+                    type: "PDF",
+                    icon: "file-pdf",
+                    color: "blue",
+                    description: "Complete guide to algorithms and data structures with examples.",
+                    updated: "2 days ago",
+                    details: "24 pages"
+                },
+                {
+                    title: "Database Systems",
+                    type: "Video",
+                    icon: "video",
+                    color: "green",
+                    description: "Video lectures and notes on SQL, normalization, and transactions.",
+                    updated: "1 week ago",
+                    details: "3h 45m"
+                }
+            ],
+            deadlines: [
+                {
+                    type: "urgent",
+                    icon: "exclamation",
+                    color: "red",
+                    title: "Final Exam",
+                    subtitle: "Due: Tomorrow, 9:00 AM"
+                },
+                {
+                    type: "warning",
+                    icon: "clock",
+                    color: "yellow",
+                    title: "Project Submission",
+                    subtitle: "Due: 3 days"
+                },
+                {
+                    type: "normal",
+                    icon: "book",
+                    color: "blue",
+                    title: "Chapter Review",
+                    subtitle: "Due: 5 days"
+                }
+            ]
+        };
+
         // Three.js Scene for Dashboard
         class DashboardScene {
             constructor() {
@@ -721,7 +738,7 @@
                 const vertices = [];
                 const colors = [];
                 
-                for (let i = 0; i < 500; i++) {
+                for (let i = 0; i < 200; i++) { // Reduced particle count
                     const x = (Math.random() - 0.5) * 100;
                     const y = (Math.random() - 0.5) * 100;
                     const z = (Math.random() - 0.5) * 100;
@@ -740,10 +757,10 @@
                 geometry.setAttribute('color', new THREE.Float32BufferAttribute(colors, 3));
                 
                 const material = new THREE.PointsMaterial({
-                    size: 3,
+                    size: 2, // Smaller particles
                     vertexColors: true,
                     transparent: true,
-                    opacity: 0.8
+                    opacity: 0.4 // More transparent
                 });
                 
                 this.particles = new THREE.Points(geometry, material);
@@ -775,14 +792,14 @@
         // Create floating particles for CSS
         function createFloatingParticles() {
             const container = document.getElementById('particles-container');
-            const particleCount = 30;
+            const particleCount = 20; // Reduced particle count
             
             for (let i = 0; i < particleCount; i++) {
                 const particle = document.createElement('div');
                 particle.className = 'particle';
                 
                 // Random size
-                const size = Math.random() * 4 + 1;
+                const size = Math.random() * 3 + 1; // Smaller particles
                 particle.style.width = `${size}px`;
                 particle.style.height = `${size}px`;
                 
@@ -797,7 +814,7 @@
                 particle.style.animationDelay = `${delay}s`;
                 
                 // Random color
-                const colors = ['rgba(102, 126, 234, 0.5)', 'rgba(118, 75, 162, 0.5)', 'rgba(76, 201, 240, 0.5)'];
+                const colors = ['rgba(102, 126, 234, 0.3)', 'rgba(118, 75, 162, 0.3)', 'rgba(76, 201, 240, 0.3)'];
                 particle.style.background = colors[Math.floor(Math.random() * colors.length)];
                 
                 container.appendChild(particle);
@@ -854,8 +871,90 @@
             });
         }
         
-        // Initialize everything when DOM is loaded
-        document.addEventListener('DOMContentLoaded', function() {
+        // Populate user data
+        function populateUserData() {
+            // User profile
+            document.getElementById('user-name').textContent = userData.name;
+            document.getElementById('user-major').textContent = userData.major;
+            document.getElementById('header-user-name').textContent = userData.name.split(' ')[0];
+            
+            // Welcome message
+            document.getElementById('welcome-message').textContent = `Welcome back, ${userData.name.split(' ')[0]}! 👋`;
+            document.getElementById('welcome-subtitle').textContent = "Ready to continue your learning journey?";
+            
+            // Stats
+            document.getElementById('study-time').textContent = userData.studyTime;
+            document.getElementById('study-time-change').innerHTML = `<i class="fas fa-arrow-up mr-1"></i><span>${userData.studyTimeChange}</span>`;
+            document.getElementById('course-progress').textContent = `${userData.courseProgress}%`;
+            document.getElementById('progress-bar').style.width = `${userData.courseProgress}%`;
+            document.getElementById('quizzes-completed').textContent = userData.quizzesCompleted;
+            document.getElementById('quiz-average').innerHTML = `<i class="fas fa-check-circle mr-1"></i><span>${userData.quizAverage}</span>`;
+            document.getElementById('study-streak').textContent = `${userData.studyStreak} days`;
+            document.getElementById('streak-message').textContent = userData.streakMessage;
+            
+            // Recent Activity
+            const activityContainer = document.getElementById('recent-activity');
+            userData.recentActivity.forEach(activity => {
+                const activityElement = document.createElement('div');
+                activityElement.className = 'flex items-start p-3 bg-gray-800/30 rounded-lg';
+                activityElement.innerHTML = `
+                    <div class="w-10 h-10 bg-${activity.color}-500/20 rounded-full flex items-center justify-center mr-4">
+                        <i class="fas fa-${activity.icon} text-${activity.color}-400"></i>
+                    </div>
+                    <div class="flex-1">
+                        <h4 class="font-semibold text-white">${activity.title}</h4>
+                        <p class="text-sm text-gray-400">${activity.subtitle}</p>
+                        <p class="text-xs text-gray-500 mt-1">${activity.time}</p>
+                    </div>
+                    <div class="text-${activity.color}-400 font-bold">${activity.xp}</div>
+                `;
+                activityContainer.appendChild(activityElement);
+            });
+            
+            // Study Materials
+            const materialsContainer = document.getElementById('study-materials');
+            userData.studyMaterials.forEach(material => {
+                const materialElement = document.createElement('div');
+                materialElement.className = 'p-4 bg-gray-800/30 rounded-lg card-hover';
+                materialElement.innerHTML = `
+                    <div class="flex items-start mb-3">
+                        <div class="w-10 h-10 bg-${material.color}-500/20 rounded-lg flex items-center justify-center mr-3">
+                            <i class="fas fa-${material.icon} text-${material.color}-400"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-white">${material.title}</h4>
+                            <p class="text-xs text-gray-400">${material.type}</p>
+                        </div>
+                    </div>
+                    <p class="text-sm text-gray-300 mb-3">${material.description}</p>
+                    <div class="flex justify-between text-xs text-gray-500">
+                        <span>Updated ${material.updated}</span>
+                        <span>${material.details}</span>
+                    </div>
+                `;
+                materialsContainer.appendChild(materialElement);
+            });
+            
+            // Upcoming Deadlines
+            const deadlinesContainer = document.getElementById('upcoming-deadlines');
+            userData.deadlines.forEach(deadline => {
+                const deadlineElement = document.createElement('div');
+                deadlineElement.className = 'flex items-center p-3 bg-gray-800/30 rounded-lg';
+                deadlineElement.innerHTML = `
+                    <div class="w-10 h-10 bg-${deadline.color}-500/20 rounded-full flex items-center justify-center mr-4">
+                        <i class="fas fa-${deadline.icon} text-${deadline.color}-400"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold text-white">${deadline.title}</h4>
+                        <p class="text-sm text-gray-400">${deadline.subtitle}</p>
+                    </div>
+                `;
+                deadlinesContainer.appendChild(deadlineElement);
+            });
+        }
+        
+        // Initialize everything when the page loads
+        document.addEventListener('DOMContentLoaded', () => {
             // Initialize Three.js scene
             new DashboardScene();
             
@@ -865,42 +964,24 @@
             // Initialize charts
             initializeCharts();
             
-            // Add interactive effects to cards
-            const cards = document.querySelectorAll('.card-hover');
-            cards.forEach(card => {
-                card.addEventListener('mouseenter', function() {
-                    this.style.transform = 'translateY(-5px) scale(1.02)';
-                });
-                
-                card.addEventListener('mouseleave', function() {
-                    this.style.transform = 'translateY(0) scale(1)';
-                });
+            // Populate user data
+            populateUserData();
+            
+            // Add some animations
+            gsap.from('.bounce-in', {
+                duration: 0.8,
+                y: 50,
+                opacity: 0,
+                stagger: 0.1,
+                ease: "back.out(1.7)"
             });
             
-            // Sidebar item interactions
-            const sidebarItems = document.querySelectorAll('.sidebar-item');
-            sidebarItems.forEach(item => {
-                item.addEventListener('click', function() {
-                    sidebarItems.forEach(i => i.classList.remove('active'));
-                    this.classList.add('active');
-                });
-            });
-            
-            // Simulate loading states for buttons
-            const buttons = document.querySelectorAll('button');
-            buttons.forEach(button => {
-                button.addEventListener('click', function() {
-                    if (this.classList.contains('btn-primary')) {
-                        const originalHTML = this.innerHTML;
-                        this.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Loading...';
-                        this.disabled = true;
-                        
-                        setTimeout(() => {
-                            this.innerHTML = originalHTML;
-                            this.disabled = false;
-                        }, 2000);
-                    }
-                });
+            gsap.from('.fade-in', {
+                duration: 0.6,
+                opacity: 0,
+                y: 20,
+                stagger: 0.1,
+                delay: 0.3
             });
         });
     </script>
