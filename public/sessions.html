@@ -1,0 +1,916 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sicon - Study Session</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background: #0f0f23;
+            color: #e0e0e0;
+            overflow-x: hidden;
+        }
+
+        .glass-card {
+            background: rgba(17, 25, 40, 0.75);
+            backdrop-filter: blur(16px) saturate(180%);
+            -webkit-backdrop-filter: blur(16px) saturate(180%);
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.125);
+            transition: all 0.3s ease;
+        }
+
+        .glass-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .input-field {
+            background: rgba(255, 255, 255, 0.07);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .input-field:focus {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(103, 126, 234, 0.5);
+            box-shadow: 0 0 0 3px rgba(103, 126, 234, 0.1);
+        }
+
+        .file-drop-zone {
+            border: 2px dashed rgba(102, 126, 234, 0.5);
+            transition: all 0.3s ease;
+        }
+
+        .file-drop-zone.active {
+            border-color: #667eea;
+            background: rgba(102, 126, 234, 0.1);
+        }
+
+        .feature-card {
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            background: rgba(102, 126, 234, 0.1);
+        }
+
+        .feature-card.active {
+            background: rgba(102, 126, 234, 0.2);
+            border-color: #667eea;
+        }
+
+        .loader {
+            width: 24px;
+            height: 24px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-top: 3px solid #667eea;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .slide-in {
+            animation: slideIn 0.5s ease-out;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .bounce-in {
+            animation: bounceIn 0.6s;
+        }
+
+        @keyframes bounceIn {
+            0% { transform: scale(0.1); opacity: 0; }
+            60% { transform: scale(1.2); opacity: 1; }
+            100% { transform: scale(1); }
+        }
+
+        .custom-scrollbar {
+            overflow-y: auto;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 4px;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: rgba(102, 126, 234, 0.5);
+            border-radius: 4px;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: rgba(102, 126, 234, 0.7);
+        }
+
+        .shiny-card {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .shiny-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(255, 255, 255, 0.1),
+                transparent
+            );
+            transition: left 0.5s;
+        }
+
+        .shiny-card:hover::before {
+            left: 100%;
+        }
+
+        .flashcard {
+            perspective: 1000px;
+            height: 200px;
+        }
+
+        .flashcard-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+        }
+
+        .flashcard.flipped .flashcard-inner {
+            transform: rotateY(180deg);
+        }
+
+        .flashcard-front, .flashcard-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            border-radius: 12px;
+        }
+
+        .flashcard-back {
+            transform: rotateY(180deg);
+        }
+
+        .quiz-option {
+            transition: all 0.3s ease;
+        }
+
+        .quiz-option:hover {
+            background: rgba(102, 126, 234, 0.1);
+        }
+
+        .quiz-option.selected {
+            background: rgba(102, 126, 234, 0.2);
+            border-color: #667eea;
+        }
+
+        .quiz-option.correct {
+            background: rgba(34, 197, 94, 0.2);
+            border-color: #22c55e;
+        }
+
+        .quiz-option.incorrect {
+            background: rgba(239, 68, 68, 0.2);
+            border-color: #ef4444;
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+    <!-- Navigation -->
+    <nav class="bg-gray-900/80 backdrop-blur-lg border-b border-gray-800 p-4">
+        <div class="flex items-center justify-between">
+            <div class="flex items-center">
+                <div class="w-10 h-10 bg-gradient-to-r from-purple-500 to-indigo-600 rounded-xl flex items-center justify-center mr-3">
+                    <i class="fas fa-graduation-cap text-white"></i>
+                </div>
+                <h1 class="text-xl font-bold gradient-text">Sicon</h1>
+            </div>
+            <div class="flex items-center space-x-4">
+                <a href="dashboard.html" class="text-gray-400 hover:text-white transition-colors">
+                    <i class="fas fa-home mr-2"></i>Dashboard
+                </a>
+                <div class="flex items-center space-x-2 text-gray-300">
+                    <div class="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center">
+                        <i class="fas fa-user text-white text-sm"></i>
+                    </div>
+                    <span id="nav-user-name">Loading...</span>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container mx-auto p-6 max-w-7xl">
+        <!-- Header -->
+        <div class="mb-8 text-center">
+            <h1 class="text-4xl font-bold text-white mb-4">AI Study Session</h1>
+            <p class="text-gray-400 text-lg">Upload files or type text to generate study materials with AI</p>
+        </div>
+
+        <!-- Main Grid -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <!-- Left Column - Input Section -->
+            <div class="lg:col-span-2 space-y-6">
+                <!-- File Upload Section -->
+                <div class="glass-card shiny-card p-6 bounce-in">
+                    <h2 class="text-2xl font-bold text-white mb-4">Upload Study Material</h2>
+                    <div class="file-drop-zone rounded-lg p-8 text-center mb-4" id="file-drop-zone">
+                        <i class="fas fa-cloud-upload-alt text-4xl text-blue-400 mb-4"></i>
+                        <p class="text-gray-400 mb-2">Drag & drop files here or click to browse</p>
+                        <p class="text-sm text-gray-500 mb-4">Supports PDF, DOCX, TXT, and video files</p>
+                        <input type="file" id="file-input" class="hidden" accept=".pdf,.docx,.txt,.mp4,.avi,.mov">
+                        <button class="btn-primary text-white font-bold py-2 px-6 rounded-lg" onclick="document.getElementById('file-input').click()">
+                            <i class="fas fa-folder-open mr-2"></i>Browse Files
+                        </button>
+                    </div>
+                    <div id="file-preview" class="hidden">
+                        <!-- File preview will be shown here -->
+                    </div>
+                </div>
+
+                <!-- Text Input Section -->
+                <div class="glass-card shiny-card p-6 bounce-in" style="animation-delay: 0.1s">
+                    <h2 class="text-2xl font-bold text-white mb-4">Or Type Your Text</h2>
+                    <div class="mb-4">
+                        <textarea 
+                            id="text-input" 
+                            class="input-field w-full h-48 p-4 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"
+                            placeholder="Paste or type your study material here... (Minimum 30 characters)"
+                        ></textarea>
+                        <div class="flex justify-between text-sm text-gray-400 mt-2">
+                            <span id="char-count">0 characters</span>
+                            <span>Minimum: 30 characters</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- AI Features Selection -->
+                <div class="glass-card shiny-card p-6 bounce-in" style="animation-delay: 0.2s">
+                    <h2 class="text-2xl font-bold text-white mb-4">Select AI Features</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="feature-card glass-card p-4 rounded-lg text-center" data-feature="summary">
+                            <div class="w-12 h-12 bg-blue-500/20 rounded-full flex items-center justify-center mx-auto mb-3">
+                                <i class="fas fa-file-alt text-blue-400 text-xl"></i>
+                            </div>
+                            <h3 class="font-semibold text-white mb-2">Summary</h3>
+                            <p class="text-sm text-gray-400">Generate concise summary</p>
+                        </div>
+                        <div class="feature-card glass-card p-4 rounded-lg text-center" data-feature="quiz">
+                            <div class="w-12 h-12 bg-green-500/20 rounded-full flex items-center justify-center mx-auto mb-3">
+                                <i class="fas fa-question-circle text-green-400 text-xl"></i>
+                            </div>
+                            <h3 class="font-semibold text-white mb-2">Quiz</h3>
+                            <p class="text-sm text-gray-400">Create practice questions</p>
+                        </div>
+                        <div class="feature-card glass-card p-4 rounded-lg text-center" data-feature="keyPoints">
+                            <div class="w-12 h-12 bg-purple-500/20 rounded-full flex items-center justify-center mx-auto mb-3">
+                                <i class="fas fa-list-ol text-purple-400 text-xl"></i>
+                            </div>
+                            <h3 class="font-semibold text-white mb-2">Key Points</h3>
+                            <p class="text-sm text-gray-400">Extract main ideas</p>
+                        </div>
+                        <div class="feature-card glass-card p-4 rounded-lg text-center" data-feature="flashcards">
+                            <div class="w-12 h-12 bg-orange-500/20 rounded-full flex items-center justify-center mx-auto mb-3">
+                                <i class="fas fa-sticky-note text-orange-400 text-xl"></i>
+                            </div>
+                            <h3 class="font-semibold text-white mb-2">Flashcards</h3>
+                            <p class="text-sm text-gray-400">Create study cards</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Generate Button -->
+                <div class="text-center">
+                    <button id="generate-btn" class="btn-primary text-white font-bold py-4 px-8 rounded-lg text-lg w-full max-w-md">
+                        <i class="fas fa-brain mr-2"></i>Generate Study Materials
+                    </button>
+                </div>
+            </div>
+
+            <!-- Right Column - Results Section -->
+            <div class="space-y-6">
+                <!-- Results Container -->
+                <div id="results-container" class="hidden">
+                    <!-- Results will be populated here -->
+                </div>
+
+                <!-- Loading State -->
+                <div id="loading-state" class="hidden glass-card p-6 text-center">
+                    <div class="loader mx-auto mb-4"></div>
+                    <h3 class="text-xl font-bold text-white mb-2">Generating Study Materials</h3>
+                    <p class="text-gray-400">AI is analyzing your content...</p>
+                </div>
+
+                <!-- Error State -->
+                <div id="error-state" class="hidden glass-card p-6 text-center">
+                    <i class="fas fa-exclamation-triangle text-red-400 text-4xl mb-4"></i>
+                    <h3 class="text-xl font-bold text-white mb-2">Generation Failed</h3>
+                    <p id="error-message" class="text-gray-400 mb-4">Something went wrong</p>
+                    <button class="btn-primary text-white font-bold py-2 px-6 rounded-lg" onclick="retryGeneration()">
+                        <i class="fas fa-redo mr-2"></i>Try Again
+                    </button>
+                </div>
+
+                <!-- Empty State -->
+                <div id="empty-state" class="glass-card p-6 text-center">
+                    <i class="fas fa-robot text-blue-400 text-4xl mb-4"></i>
+                    <h3 class="text-xl font-bold text-white mb-2">Ready to Generate</h3>
+                    <p class="text-gray-400">Upload a file or enter text above to get started</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // API Configuration
+        const API_BASE_URL = window.location.origin + '/api';
+        let currentSessionId = null;
+        let selectedFeatures = ['summary', 'quiz', 'keyPoints', 'flashcards'];
+
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', function() {
+            initializePage();
+            setupEventListeners();
+        });
+
+        // Initialize page data
+        function initializePage() {
+            // Load user data from localStorage
+            const userData = JSON.parse(localStorage.getItem('userData') || '{}');
+            document.getElementById('nav-user-name').textContent = userData.name || 'Student';
+
+            // Initialize feature selection
+            updateFeatureSelection();
+        }
+
+        // Setup event listeners
+        function setupEventListeners() {
+            // File input handling
+            const fileInput = document.getElementById('file-input');
+            const dropZone = document.getElementById('file-drop-zone');
+
+            fileInput.addEventListener('change', handleFileSelect);
+            
+            // Drag and drop events
+            ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+                dropZone.addEventListener(eventName, preventDefaults, false);
+            });
+
+            ['dragenter', 'dragover'].forEach(eventName => {
+                dropZone.addEventListener(eventName, highlight, false);
+            });
+
+            ['dragleave', 'drop'].forEach(eventName => {
+                dropZone.addEventListener(eventName, unhighlight, false);
+            });
+
+            dropZone.addEventListener('drop', handleDrop, false);
+
+            // Text input character count
+            const textInput = document.getElementById('text-input');
+            textInput.addEventListener('input', updateCharCount);
+
+            // Feature selection
+            document.querySelectorAll('.feature-card').forEach(card => {
+                card.addEventListener('click', toggleFeature);
+            });
+
+            // Generate button
+            document.getElementById('generate-btn').addEventListener('click', generateStudyMaterials);
+        }
+
+        // File handling functions
+        function preventDefaults(e) {
+            e.preventDefault();
+            e.stopPropagation();
+        }
+
+        function highlight() {
+            document.getElementById('file-drop-zone').classList.add('active');
+        }
+
+        function unhighlight() {
+            document.getElementById('file-drop-zone').classList.remove('active');
+        }
+
+        function handleDrop(e) {
+            const dt = e.dataTransfer;
+            const files = dt.files;
+            handleFiles(files);
+        }
+
+        function handleFileSelect(e) {
+            const files = e.target.files;
+            handleFiles(files);
+        }
+
+        function handleFiles(files) {
+            if (files.length > 0) {
+                const file = files[0];
+                showFilePreview(file);
+                // For now, we'll just show the file preview
+                // In a real implementation, you would upload the file to your server
+                // and extract text from it
+            }
+        }
+
+        function showFilePreview(file) {
+            const preview = document.getElementById('file-preview');
+            const fileType = file.type.split('/')[0];
+            
+            let previewHTML = `
+                <div class="flex items-center p-4 bg-gray-800/50 rounded-lg">
+                    <div class="w-12 h-12 bg-blue-500/20 rounded-lg flex items-center justify-center mr-4">
+                        <i class="fas fa-${getFileIcon(fileType)} text-blue-400"></i>
+                    </div>
+                    <div class="flex-1">
+                        <h4 class="font-semibold text-white">${file.name}</h4>
+                        <p class="text-sm text-gray-400">${formatFileSize(file.size)}</p>
+                    </div>
+                    <button class="text-red-400 hover:text-red-300" onclick="clearFile()">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            `;
+            
+            preview.innerHTML = previewHTML;
+            preview.classList.remove('hidden');
+        }
+
+        function getFileIcon(fileType) {
+            switch(fileType) {
+                case 'video': return 'video';
+                case 'application': return 'file-pdf';
+                default: return 'file';
+            }
+        }
+
+        function formatFileSize(bytes) {
+            if (bytes === 0) return '0 Bytes';
+            const k = 1024;
+            const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+        }
+
+        function clearFile() {
+            document.getElementById('file-input').value = '';
+            document.getElementById('file-preview').classList.add('hidden');
+            document.getElementById('file-preview').innerHTML = '';
+        }
+
+        // Text input functions
+        function updateCharCount() {
+            const text = document.getElementById('text-input').value;
+            const charCount = text.length;
+            document.getElementById('char-count').textContent = `${charCount} characters`;
+            
+            // Update generate button state
+            const generateBtn = document.getElementById('generate-btn');
+            generateBtn.disabled = charCount < 30;
+            generateBtn.classList.toggle('opacity-50', charCount < 30);
+            generateBtn.classList.toggle('cursor-not-allowed', charCount < 30);
+        }
+
+        // Feature selection functions
+        function toggleFeature(e) {
+            const card = e.currentTarget;
+            const feature = card.dataset.feature;
+            
+            if (selectedFeatures.includes(feature)) {
+                selectedFeatures = selectedFeatures.filter(f => f !== feature);
+                card.classList.remove('active');
+            } else {
+                selectedFeatures.push(feature);
+                card.classList.add('active');
+            }
+            
+            updateGenerateButton();
+        }
+
+        function updateFeatureSelection() {
+            document.querySelectorAll('.feature-card').forEach(card => {
+                const feature = card.dataset.feature;
+                if (selectedFeatures.includes(feature)) {
+                    card.classList.add('active');
+                } else {
+                    card.classList.remove('active');
+                }
+            });
+        }
+
+        function updateGenerateButton() {
+            const generateBtn = document.getElementById('generate-btn');
+            const hasText = document.getElementById('text-input').value.length >= 30;
+            const hasFeatures = selectedFeatures.length > 0;
+            
+            generateBtn.disabled = !hasText || !hasFeatures;
+            generateBtn.classList.toggle('opacity-50', !hasText || !hasFeatures);
+            generateBtn.classList.toggle('cursor-not-allowed', !hasText || !hasFeatures);
+        }
+
+        // Main generation function
+        async function generateStudyMaterials() {
+            const text = document.getElementById('text-input').value.trim();
+            
+            if (text.length < 30) {
+                showError('Please enter at least 30 characters of text');
+                return;
+            }
+            
+            if (selectedFeatures.length === 0) {
+                showError('Please select at least one AI feature');
+                return;
+            }
+            
+            // Show loading state
+            showLoading();
+            
+            try {
+                const token = localStorage.getItem('authToken');
+                if (!token) {
+                    throw new Error('Authentication required. Please log in again.');
+                }
+                
+                const response = await fetch(`${API_BASE_URL}/study/process`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify({
+                        text: text,
+                        features: selectedFeatures
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (!response.ok) {
+                    throw new Error(data.error || 'Failed to generate study materials');
+                }
+                
+                if (data.success) {
+                    currentSessionId = data.sessionId;
+                    showResults(data);
+                } else {
+                    throw new Error(data.error || 'Generation failed');
+                }
+                
+            } catch (error) {
+                console.error('Generation error:', error);
+                showError(error.message);
+            }
+        }
+
+        // UI state management
+        function showLoading() {
+            document.getElementById('empty-state').classList.add('hidden');
+            document.getElementById('results-container').classList.add('hidden');
+            document.getElementById('error-state').classList.add('hidden');
+            document.getElementById('loading-state').classList.remove('hidden');
+        }
+
+        function showResults(data) {
+            document.getElementById('loading-state').classList.add('hidden');
+            document.getElementById('error-state').classList.add('hidden');
+            document.getElementById('empty-state').classList.add('hidden');
+            
+            const resultsContainer = document.getElementById('results-container');
+            resultsContainer.innerHTML = '';
+            resultsContainer.classList.remove('hidden');
+            
+            // Add session info
+            const sessionInfo = document.createElement('div');
+            sessionInfo.className = 'glass-card p-4 mb-6';
+            sessionInfo.innerHTML = `
+                <div class="flex items-center justify-between">
+                    <h3 class="text-lg font-bold text-white">Study Session Created</h3>
+                    <span class="text-sm text-gray-400">${new Date().toLocaleString()}</span>
+                </div>
+            `;
+            resultsContainer.appendChild(sessionInfo);
+            
+            // Add results for each feature
+            if (data.summary && selectedFeatures.includes('summary')) {
+                addSummaryResult(data.summary);
+            }
+            
+            if (data.quiz && selectedFeatures.includes('quiz')) {
+                addQuizResult(data.quiz);
+            }
+            
+            if (data.keyPoints && selectedFeatures.includes('keyPoints')) {
+                addKeyPointsResult(data.keyPoints);
+            }
+            
+            if (data.flashcards && selectedFeatures.includes('flashcards')) {
+                addFlashcardsResult(data.flashcards);
+            }
+            
+            // Add save button
+            const saveSection = document.createElement('div');
+            saveSection.className = 'text-center mt-6';
+            saveSection.innerHTML = `
+                <button class="btn-primary text-white font-bold py-3 px-6 rounded-lg" onclick="saveSession()">
+                    <i class="fas fa-save mr-2"></i>Save Study Session
+                </button>
+            `;
+            resultsContainer.appendChild(saveSection);
+            
+            // Animate results
+            gsap.from('.result-section', {
+                duration: 0.6,
+                y: 20,
+                opacity: 0,
+                stagger: 0.1,
+                ease: "back.out(1.2)"
+            });
+        }
+
+        function showError(message) {
+            document.getElementById('loading-state').classList.add('hidden');
+            document.getElementById('results-container').classList.add('hidden');
+            document.getElementById('empty-state').classList.add('hidden');
+            
+            document.getElementById('error-message').textContent = message;
+            document.getElementById('error-state').classList.remove('hidden');
+        }
+
+        // Result display functions
+        function addSummaryResult(summary) {
+            const section = document.createElement('div');
+            section.className = 'result-section glass-card p-6 mb-6';
+            section.innerHTML = `
+                <div class="flex items-center mb-4">
+                    <div class="w-10 h-10 bg-blue-500/20 rounded-full flex items-center justify-center mr-3">
+                        <i class="fas fa-file-alt text-blue-400"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white">AI Summary</h3>
+                </div>
+                <div class="bg-gray-800/50 rounded-lg p-4">
+                    <p class="text-gray-300 leading-relaxed">${summary}</p>
+                </div>
+            `;
+            document.getElementById('results-container').appendChild(section);
+        }
+
+        function addQuizResult(quiz) {
+            const section = document.createElement('div');
+            section.className = 'result-section glass-card p-6 mb-6';
+            section.innerHTML = `
+                <div class="flex items-center mb-4">
+                    <div class="w-10 h-10 bg-green-500/20 rounded-full flex items-center justify-center mr-3">
+                        <i class="fas fa-question-circle text-green-400"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white">Practice Quiz</h3>
+                </div>
+                <div class="space-y-4" id="quiz-container">
+                    ${quiz.map((question, index) => `
+                        <div class="bg-gray-800/50 rounded-lg p-4">
+                            <h4 class="font-semibold text-white mb-3">${index + 1}. ${question.question}</h4>
+                            <div class="space-y-2">
+                                ${question.options.map((option, optIndex) => `
+                                    <div class="quiz-option p-3 bg-gray-700/50 rounded-lg border border-gray-600" 
+                                         data-question="${index}" 
+                                         data-option="${optIndex}">
+                                        <span class="text-gray-300">${String.fromCharCode(65 + optIndex)}. ${option}</span>
+                                    </div>
+                                `).join('')}
+                            </div>
+                            <div class="explanation mt-3 hidden">
+                                <p class="text-sm text-gray-400"><strong>Explanation:</strong> ${question.explanation}</p>
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+            document.getElementById('results-container').appendChild(section);
+            
+            // Add quiz interaction
+            setTimeout(() => {
+                document.querySelectorAll('.quiz-option').forEach(option => {
+                    option.addEventListener('click', handleQuizAnswer);
+                });
+            }, 100);
+        }
+
+        function addKeyPointsResult(keyPoints) {
+            const section = document.createElement('div');
+            section.className = 'result-section glass-card p-6 mb-6';
+            section.innerHTML = `
+                <div class="flex items-center mb-4">
+                    <div class="w-10 h-10 bg-purple-500/20 rounded-full flex items-center justify-center mr-3">
+                        <i class="fas fa-list-ol text-purple-400"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white">Key Points</h3>
+                </div>
+                <div class="space-y-3">
+                    ${keyPoints.map(point => `
+                        <div class="flex items-start p-3 bg-gray-800/50 rounded-lg">
+                            <div class="w-6 h-6 bg-purple-500/20 rounded-full flex items-center justify-center mr-3 mt-1 flex-shrink-0">
+                                <span class="text-purple-400 text-sm font-bold">${point.id}</span>
+                            </div>
+                            <p class="text-gray-300">${point.point}</p>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+            document.getElementById('results-container').appendChild(section);
+        }
+
+        function addFlashcardsResult(flashcards) {
+            const section = document.createElement('div');
+            section.className = 'result-section glass-card p-6 mb-6';
+            section.innerHTML = `
+                <div class="flex items-center mb-4">
+                    <div class="w-10 h-10 bg-orange-500/20 rounded-full flex items-center justify-center mr-3">
+                        <i class="fas fa-sticky-note text-orange-400"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white">Flashcards</h3>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="flashcards-container">
+                    ${flashcards.map((card, index) => `
+                        <div class="flashcard" data-index="${index}">
+                            <div class="flashcard-inner">
+                                <div class="flashcard-front glass-card">
+                                    <div class="text-center">
+                                        <h4 class="font-bold text-white mb-2">Front</h4>
+                                        <p class="text-gray-300">${card.front}</p>
+                                    </div>
+                                </div>
+                                <div class="flashcard-back glass-card bg-blue-500/10">
+                                    <div class="text-center">
+                                        <h4 class="font-bold text-white mb-2">Back</h4>
+                                        <p class="text-gray-300">${card.back}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>
+                <div class="text-center mt-4">
+                    <button class="text-blue-400 hover:text-blue-300 text-sm" onclick="flipAllFlashcards()">
+                        <i class="fas fa-sync-alt mr-1"></i>Flip All Cards
+                    </button>
+                </div>
+            `;
+            document.getElementById('results-container').appendChild(section);
+            
+            // Add flashcard interaction
+            setTimeout(() => {
+                document.querySelectorAll('.flashcard').forEach(card => {
+                    card.addEventListener('click', function() {
+                        this.classList.toggle('flipped');
+                    });
+                });
+            }, 100);
+        }
+
+        // Interactive functions
+        function handleQuizAnswer(e) {
+            const option = e.currentTarget;
+            const questionIndex = parseInt(option.dataset.question);
+            const optionIndex = parseInt(option.dataset.option);
+            const questionContainer = option.closest('.bg-gray-800/50');
+            const explanation = questionContainer.querySelector('.explanation');
+            const allOptions = questionContainer.querySelectorAll('.quiz-option');
+            
+            // Get the correct answer from the data (this would come from the API response)
+            // For now, we'll assume the first option is correct (this should be improved)
+            const correctIndex = 0; // This should come from the API response
+            
+            // Clear previous selections
+            allOptions.forEach(opt => {
+                opt.classList.remove('selected', 'correct', 'incorrect');
+            });
+            
+            // Mark selected option
+            option.classList.add('selected');
+            
+            // Show correct/incorrect
+            if (optionIndex === correctIndex) {
+                option.classList.add('correct');
+            } else {
+                option.classList.add('incorrect');
+                // Also show the correct answer
+                allOptions[correctIndex].classList.add('correct');
+            }
+            
+            // Show explanation
+            explanation.classList.remove('hidden');
+        }
+
+        function flipAllFlashcards() {
+            const flashcards = document.querySelectorAll('.flashcard');
+            const allFlipped = Array.from(flashcards).every(card => card.classList.contains('flipped'));
+            
+            flashcards.forEach(card => {
+                if (allFlipped) {
+                    card.classList.remove('flipped');
+                } else {
+                    card.classList.add('flipped');
+                }
+            });
+        }
+
+        function retryGeneration() {
+            document.getElementById('error-state').classList.add('hidden');
+            generateStudyMaterials();
+        }
+
+        async function saveSession() {
+            if (!currentSessionId) {
+                showError('No session to save');
+                return;
+            }
+            
+            try {
+                // In a real implementation, you would save the session to the backend
+                // For now, we'll just show a success message
+                
+                // Show success notification
+                const notification = document.createElement('div');
+                notification.className = 'fixed top-4 right-4 glass-card p-4 text-green-400 z-50 slide-in';
+                notification.innerHTML = `
+                    <div class="flex items-center">
+                        <i class="fas fa-check-circle mr-2"></i>
+                        <span>Study session saved successfully!</span>
+                    </div>
+                `;
+                document.body.appendChild(notification);
+                
+                // Remove notification after 3 seconds
+                setTimeout(() => {
+                    notification.remove();
+                }, 3000);
+                
+            } catch (error) {
+                console.error('Save error:', error);
+                showError('Failed to save session');
+            }
+        }
+    </script>
+</body>
+</html>
