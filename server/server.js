@@ -12,10 +12,14 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 // Middleware
-app.use(cors());
+
 app.use(express.json());
 app.use(express.static(path.join(__dirname, '../public')));
-
+// Add CORS configuration
+app.use(cors({
+  origin: process.env.CLIENT_URL || 'http://localhost:3000',
+  credentials: true
+}));
 // Import routes using the correct syntax
 import authRouter from './routes/auth.js';
 import studyRouter from './routes/study.js';

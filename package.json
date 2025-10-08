@@ -1,5 +1,5 @@
 {
-  "name": "ai-study-mate",
+  "name": "sicon",
   "version": "1.0.0",
   "type": "module",
   "description": "AI-powered study assistant with real AI integration",
@@ -9,15 +9,21 @@
     "dev": "node --watch server/server.js"
   },
   "dependencies": {
-    "express": "^4.18.2",
-    "cors": "^2.8.5",
     "bcryptjs": "^2.4.3",
-    "jsonwebtoken": "^9.0.2",
+    "cors": "^2.8.5",
     "dotenv": "^16.3.1",
-    "openai": "^4.20.1",
-    "node-fetch": "^3.3.2"
+    "express": "^4.18.2",
+    "jsonwebtoken": "^9.0.2",
+    "multer": "^2.0.2",
+    "node-fetch": "^3.3.2",
+    "openai": "^4.20.1"
   },
-  "keywords": ["ai", "study", "education", "productivity"],
+  "keywords": [
+    "ai",
+    "study",
+    "education",
+    "productivity"
+  ],
   "author": "Your Name",
   "license": "MIT"
 }

@@ -1,5 +1,510 @@
 [
   {
+    "id": "1759944190981",
+    "userId": "1759802837165",
+    "originalText": "Machine learning is a subfield of artificial intelligence that enables systems to learn from data and improve over time without explicit programming, ...",
+    "fullTextLength": 437,
+    "results": {
+      "summary": "Machine learning is a subfield of artificial intelligence that enables systems to learn from data and improve over time. Algorithms are trained on data sets to create predictive models, which are then used for tasks like classification, forecasting, and pattern recognition in various fields, including medicine, finance, and everyday applications. In the U.S., machine learning is being used by companies such as Google, Apple, Facebook, and Microsoft.",
+      "quiz": [
+        {
+          "question": "What is the main topic of this text?",
+          "options": [
+            "Algorithms",
+            "Related but different concept",
+            "Related but different concept",
+            "A completely different subject"
+          ],
+          "correct": 0,
+          "explanation": "The text primarily focuses on Algorithms, as evidenced by the content and key terms."
+        },
+        {
+          "question": "Which of these is a key concept mentioned in the text?",
+          "options": [
+            "Machine",
+            "artificial intelligence",
+            "Unrelated concept 1",
+            "Unrelated concept 2"
+          ],
+          "correct": 0,
+          "explanation": "Machine is a key concept discussed in the material."
+        }
+      ],
+      "flashcards": [
+        {
+          "front": "Machine",
+          "back": "Important concept in Algorithms."
+        },
+        {
+          "front": "learning",
+          "back": "Important concept in Algorithms."
+        },
+        {
+          "front": "subfield",
+          "back": "Important concept in Algorithms."
+        },
+        {
+          "front": "artificial",
+          "back": "Important concept in Algorithms."
+        }
+      ],
+      "keyPoints": [
+        {
+          "id": 1,
+          "point": "Machine learning is a subfield of artificial intelligence that enables systems to learn from data and improve over time without explicit programming, using algorithms to identify patterns and make predictions."
+        },
+        {
+          "id": 2,
+          "point": "Algorithms are trained on data sets to create predictive models, which are then used for tasks like classification, forecasting, and pattern recognition in various fields, including medicine, finance, and everyday applications."
+        }
+      ]
+    },
+    "features": [
+      "summary",
+      "quiz",
+      "keyPoints",
+      "flashcards"
+    ],
+    "timestamp": "2025-10-08T17:23:10.981Z",
+    "wordCount": 61,
+    "inputType": "text",
+    "fileName": null
+  },
+  {
+    "id": "1759944003585",
+    "userId": "1759802837165",
+    "originalText": "Machine learning is a subfield of artificial intelligence that enables systems to learn from data and improve over time without explicit programming, ...",
+    "fullTextLength": 437,
+    "results": {
+      "summary": "Machine learning is a subfield of artificial intelligence that enables systems to learn from data and improve over time. Algorithms are trained on data sets to create predictive models, which are then used for tasks like classification, forecasting, and pattern recognition in various fields, including medicine, finance, and everyday applications. In the U.S., machine learning is being used by companies such as Google, Apple, Facebook, and Microsoft.",
+      "quiz": [
+        {
+          "question": "What is the main topic of this text?",
+          "options": [
+            "Algorithms",
+            "Related but different concept",
+            "Related but different concept",
+            "A completely different subject"
+          ],
+          "correct": 0,
+          "explanation": "The text primarily focuses on Algorithms, as evidenced by the content and key terms."
+        },
+        {
+          "question": "Which of these is a key concept mentioned in the text?",
+          "options": [
+            "Machine",
+            "artificial intelligence",
+            "Unrelated concept 1",
+            "Unrelated concept 2"
+          ],
+          "correct": 0,
+          "explanation": "Machine is a key concept discussed in the material."
+        }
+      ],
+      "flashcards": [
+        {
+          "front": "Machine",
+          "back": "Important concept in Algorithms."
+        },
+        {
+          "front": "learning",
+          "back": "Important concept in Algorithms."
+        },
+        {
+          "front": "subfield",
+          "back": "Important concept in Algorithms."
+        },
+        {
+          "front": "artificial",
+          "back": "Important concept in Algorithms."
+        }
+      ],
+      "keyPoints": [
+        {
+          "id": 1,
+          "point": "Machine learning is a subfield of artificial intelligence that enables systems to learn from data and improve over time without explicit programming, using algorithms to identify patterns and make predictions."
+        },
+        {
+          "id": 2,
+          "point": "Algorithms are trained on data sets to create predictive models, which are then used for tasks like classification, forecasting, and pattern recognition in various fields, including medicine, finance, and everyday applications."
+        }
+      ]
+    },
+    "features": [
+      "summary",
+      "quiz",
+      "keyPoints",
+      "flashcards"
+    ],
+    "timestamp": "2025-10-08T17:20:03.585Z",
+    "wordCount": 61,
+    "inputType": "text",
+    "fileName": null
+  },
+  {
+    "id": "1759942705428",
+    "userId": "1759802837165",
+    "originalText": "Machine learning is a subfield of artificial intelligence that enables systems to learn from data and improve over time without explicit programming, ...",
+    "fullTextLength": 437,
+    "results": {
+      "summary": "Machine learning is a subfield of artificial intelligence that enables systems to learn from data and improve over time. Algorithms are trained on data sets to create predictive models, which are then used for tasks like classification, forecasting, and pattern recognition in various fields, including medicine, finance, and everyday applications. In the U.S., machine learning is being used by companies such as Google, Apple, Facebook, and Microsoft.",
+      "quiz": [
+        {
+          "question": "What is the main topic of this text?",
+          "options": [
+            "Algorithms",
+            "Related but different concept",
+            "Related but different concept",
+            "A completely different subject"
+          ],
+          "correct": 0,
+          "explanation": "The text primarily focuses on Algorithms, as evidenced by the content and key terms."
+        },
+        {
+          "question": "Which of these is a key concept mentioned in the text?",
+          "options": [
+            "Machine",
+            "artificial intelligence",
+            "Unrelated concept 1",
+            "Unrelated concept 2"
+          ],
+          "correct": 0,
+          "explanation": "Machine is a key concept discussed in the material."
+        }
+      ],
+      "flashcards": [
+        {
+          "front": "Machine",
+          "back": "Important concept in Algorithms."
+        },
+        {
+          "front": "learning",
+          "back": "Important concept in Algorithms."
+        },
+        {
+          "front": "subfield",
+          "back": "Important concept in Algorithms."
+        },
+        {
+          "front": "artificial",
+          "back": "Important concept in Algorithms."
+        }
+      ],
+      "keyPoints": [
+        {
+          "id": 1,
+          "point": "Machine learning is a subfield of artificial intelligence that enables systems to learn from data and improve over time without explicit programming, using algorithms to identify patterns and make predictions."
+        },
+        {
+          "id": 2,
+          "point": "Algorithms are trained on data sets to create predictive models, which are then used for tasks like classification, forecasting, and pattern recognition in various fields, including medicine, finance, and everyday applications."
+        }
+      ]
+    },
+    "features": [
+      "summary",
+      "quiz",
+      "keyPoints",
+      "flashcards"
+    ],
+    "timestamp": "2025-10-08T16:58:25.428Z",
+    "wordCount": 61,
+    "inputType": "text",
+    "fileName": null
+  },
+  {
+    "id": "1759942586434",
+    "userId": "1759802837165",
+    "originalText": "Machine learning is a subfield of artificial intelligence that enables systems to learn from data and improve over time without explicit programming, ...",
+    "fullTextLength": 437,
+    "results": {
+      "summary": "Machine learning is a subfield of artificial intelligence that enables systems to learn from data and improve over time. Algorithms are trained on data sets to create predictive models, which are then used for tasks like classification, forecasting, and pattern recognition in various fields, including medicine, finance, and everyday applications. In the U.S., machine learning is being used by companies such as Google, Apple, Facebook, and Microsoft.",
+      "quiz": [
+        {
+          "question": "What is the main topic of this text?",
+          "options": [
+            "Algorithms",
+            "Related but different concept",
+            "Related but different concept",
+            "A completely different subject"
+          ],
+          "correct": 0,
+          "explanation": "The text primarily focuses on Algorithms, as evidenced by the content and key terms."
+        },
+        {
+          "question": "Which of these is a key concept mentioned in the text?",
+          "options": [
+            "Machine",
+            "artificial intelligence",
+            "Unrelated concept 1",
+            "Unrelated concept 2"
+          ],
+          "correct": 0,
+          "explanation": "Machine is a key concept discussed in the material."
+        }
+      ],
+      "flashcards": [
+        {
+          "front": "Machine",
+          "back": "Important concept in Algorithms."
+        },
+        {
+          "front": "learning",
+          "back": "Important concept in Algorithms."
+        },
+        {
+          "front": "subfield",
+          "back": "Important concept in Algorithms."
+        },
+        {
+          "front": "artificial",
+          "back": "Important concept in Algorithms."
+        }
+      ],
+      "keyPoints": [
+        {
+          "id": 1,
+          "point": "Machine learning is a subfield of artificial intelligence that enables systems to learn from data and improve over time without explicit programming, using algorithms to identify patterns and make predictions."
+        },
+        {
+          "id": 2,
+          "point": "Algorithms are trained on data sets to create predictive models, which are then used for tasks like classification, forecasting, and pattern recognition in various fields, including medicine, finance, and everyday applications."
+        }
+      ]
+    },
+    "features": [
+      "summary",
+      "quiz",
+      "keyPoints",
+      "flashcards"
+    ],
+    "timestamp": "2025-10-08T16:56:26.434Z",
+    "wordCount": 61,
+    "inputType": "text",
+    "fileName": null
+  },
+  {
+    "id": "1759942163618",
+    "userId": "1759802837165",
+    "originalText": "Machine learning is a subfield of artificial intelligence that enables systems to learn from data and improve over time without explicit programming, ...",
+    "fullTextLength": 437,
+    "results": {
+      "summary": "Machine learning is a subfield of artificial intelligence that enables systems to learn from data and improve over time without explicit programming, using algorithms to identify patterns and make predictions. Algorithms are trained on data sets to create predictive models, which are then used for tasks like classification, forecasting, and pattern recognition in various fields, including medicine, finance, and everyday applications. [AI Enhanced Summary]",
+      "quiz": [
+        {
+          "question": "What is the main topic of this text?",
+          "options": [
+            "Algorithms",
+            "Related but different concept",
+            "Related but different concept",
+            "A completely different subject"
+          ],
+          "correct": 0,
+          "explanation": "The text primarily focuses on Algorithms, as evidenced by the content and key terms."
+        },
+        {
+          "question": "Which of these is a key concept mentioned in the text?",
+          "options": [
+            "Machine",
+            "artificial intelligence",
+            "Unrelated concept 1",
+            "Unrelated concept 2"
+          ],
+          "correct": 0,
+          "explanation": "Machine is a key concept discussed in the material."
+        }
+      ],
+      "flashcards": [
+        {
+          "front": "Machine",
+          "back": "Important concept in Algorithms."
+        },
+        {
+          "front": "learning",
+          "back": "Important concept in Algorithms."
+        },
+        {
+          "front": "subfield",
+          "back": "Important concept in Algorithms."
+        },
+        {
+          "front": "artificial",
+          "back": "Important concept in Algorithms."
+        }
+      ],
+      "keyPoints": [
+        {
+          "id": 1,
+          "point": "Machine learning is a subfield of artificial intelligence that enables systems to learn from data and improve over time without explicit programming, using algorithms to identify patterns and make predictions."
+        },
+        {
+          "id": 2,
+          "point": "Algorithms are trained on data sets to create predictive models, which are then used for tasks like classification, forecasting, and pattern recognition in various fields, including medicine, finance, and everyday applications."
+        }
+      ]
+    },
+    "features": [
+      "summary",
+      "quiz",
+      "keyPoints",
+      "flashcards"
+    ],
+    "timestamp": "2025-10-08T16:49:23.618Z",
+    "wordCount": 61,
+    "inputType": "text",
+    "fileName": null
+  },
+  {
+    "id": "1759940652825",
+    "userId": "1759802837165",
+    "originalText": "Set theory is a fundamental branch of mathematics that studies sets, which are collections of distinct objects. It provides a basis for modern mathema...",
+    "fullTextLength": 358,
+    "results": {
+      "summary": "Set theory is a fundamental branch of mathematics that studies sets, which are collections of distinct objects. It provides a basis for modern mathematical logic and underpins various mathematical disciplines. Key concepts include unions, intersections, subsets, and complements, helping define relationships and operations within and between different sets. [AI Enhanced Summary]",
+      "quiz": [
+        {
+          "question": "What is the main topic of this text?",
+          "options": [
+            "Mathematical",
+            "Related but different concept",
+            "Related but different concept",
+            "A completely different subject"
+          ],
+          "correct": 0,
+          "explanation": "The text primarily focuses on Mathematical, as evidenced by the content and key terms."
+        },
+        {
+          "question": "Which of these is a key concept mentioned in the text?",
+          "options": [
+            "fundamental",
+            "Related but different concept",
+            "Unrelated concept 1",
+            "Unrelated concept 2"
+          ],
+          "correct": 0,
+          "explanation": "fundamental is a key concept discussed in the material."
+        }
+      ],
+      "flashcards": [
+        {
+          "front": "fundamental",
+          "back": "Important concept in Mathematical."
+        },
+        {
+          "front": "mathematics",
+          "back": "Important concept in Mathematical."
+        },
+        {
+          "front": "studies",
+          "back": "Important concept in Mathematical."
+        },
+        {
+          "front": "collections",
+          "back": "Important concept in Mathematical."
+        }
+      ],
+      "keyPoints": [
+        {
+          "id": 1,
+          "point": "Set theory is a fundamental branch of mathematics that studies sets, which are collections of distinct objects."
+        },
+        {
+          "id": 2,
+          "point": "It provides a basis for modern mathematical logic and underpins various mathematical disciplines."
+        },
+        {
+          "id": 3,
+          "point": "Key concepts include unions, intersections, subsets, and complements, helping define relationships and operations within and between different sets."
+        }
+      ]
+    },
+    "features": [
+      "summary",
+      "quiz",
+      "keyPoints",
+      "flashcards"
+    ],
+    "timestamp": "2025-10-08T16:24:12.825Z",
+    "wordCount": 48,
+    "inputType": "text",
+    "fileName": null
+  },
+  {
+    "id": "1759940652194",
+    "userId": "1759802837165",
+    "originalText": "Set theory is a fundamental branch of mathematics that studies sets, which are collections of distinct objects. It provides a basis for modern mathema...",
+    "fullTextLength": 358,
+    "results": {
+      "summary": "Set theory is a fundamental branch of mathematics that studies sets, which are collections of distinct objects. It provides a basis for modern mathematical logic and underpins various mathematical disciplines. Key concepts include unions, intersections, subsets, and complements, helping define relationships and operations within and between different sets. [AI Enhanced Summary]",
+      "quiz": [
+        {
+          "question": "What is the main topic of this text?",
+          "options": [
+            "Mathematical",
+            "Related but different concept",
+            "Related but different concept",
+            "A completely different subject"
+          ],
+          "correct": 0,
+          "explanation": "The text primarily focuses on Mathematical, as evidenced by the content and key terms."
+        },
+        {
+          "question": "Which of these is a key concept mentioned in the text?",
+          "options": [
+            "fundamental",
+            "Related but different concept",
+            "Unrelated concept 1",
+            "Unrelated concept 2"
+          ],
+          "correct": 0,
+          "explanation": "fundamental is a key concept discussed in the material."
+        }
+      ],
+      "flashcards": [
+        {
+          "front": "fundamental",
+          "back": "Important concept in Mathematical."
+        },
+        {
+          "front": "mathematics",
+          "back": "Important concept in Mathematical."
+        },
+        {
+          "front": "studies",
+          "back": "Important concept in Mathematical."
+        },
+        {
+          "front": "collections",
+          "back": "Important concept in Mathematical."
+        }
+      ],
+      "keyPoints": [
+        {
+          "id": 1,
+          "point": "Set theory is a fundamental branch of mathematics that studies sets, which are collections of distinct objects."
+        },
+        {
+          "id": 2,
+          "point": "It provides a basis for modern mathematical logic and underpins various mathematical disciplines."
+        },
+        {
+          "id": 3,
+          "point": "Key concepts include unions, intersections, subsets, and complements, helping define relationships and operations within and between different sets."
+        }
+      ]
+    },
+    "features": [
+      "summary",
+      "quiz",
+      "keyPoints",
+      "flashcards"
+    ],
+    "timestamp": "2025-10-08T16:24:12.194Z",
+    "wordCount": 48,
+    "inputType": "text",
+    "fileName": null
+  },
+  {
     "id": "1759932068809",
     "userId": "1759802837165",
     "originalText": "Computer Science is the study of how computers work and how to use them to solve problems efficiently. It combines logic, creativity, and mathematics ...",

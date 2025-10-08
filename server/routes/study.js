@@ -73,7 +73,7 @@ try {
     extractTextFromPDF: async (filePath) => "This is sample text extracted from PDF document."
   };
 }
-
+console.log(aiService);
 const router = express.Router();
 
 // Helper function to read study sessions
@@ -432,5 +432,27 @@ function getMostUsedFeature(sessions) {
     featureCount[a] > featureCount[b] ? a : b, 'summary'
   );
 }
+
+// Debug endpoint to test if API is working
+router.get('/debug', authenticateToken, (req, res) => {
+  res.json({
+    success: true,
+    message: 'Study API is working!',
+    user: req.user,
+    timestamp: new Date().toISOString()
+  });
+});
+// Test endpoint without authentication
+router.get('/test', (req, res) => {
+  res.json({
+    success: true,
+    message: 'Study API test endpoint is working!',
+    timestamp: new Date().toISOString(),
+    env: {
+      huggingfaceKey: process.env.HUGGINGFACE_API_KEY ? 'Set' : 'Not set',
+      nodeEnv: process.env.NODE_ENV
+    }
+  });
+});
 
 export default router;
