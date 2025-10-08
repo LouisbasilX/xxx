@@ -1,5 +1,78 @@
 [
   {
+    "id": "1759932068809",
+    "userId": "1759802837165",
+    "originalText": "Computer Science is the study of how computers work and how to use them to solve problems efficiently. It combines logic, creativity, and mathematics ...",
+    "fullTextLength": 332,
+    "results": {
+      "summary": "Computer Science is the study of how computers work and how to use them to solve problems efficiently. It combines logic, creativity, and mathematics to design algorithms, build software, and analyze data. From artificial intelligence to cybersecurity, CS powers innovation and shapes the future of technology and human interaction. [AI Enhanced Summary]",
+      "quiz": [
+        {
+          "question": "What is the main topic of this text?",
+          "options": [
+            "Computer",
+            "technology",
+            "technology",
+            "A completely different subject"
+          ],
+          "correct": 0,
+          "explanation": "The text primarily focuses on Computer, as evidenced by the content and key terms."
+        },
+        {
+          "question": "Which of these is a key concept mentioned in the text?",
+          "options": [
+            "Computer",
+            "technology",
+            "Unrelated concept 1",
+            "Unrelated concept 2"
+          ],
+          "correct": 0,
+          "explanation": "Computer is a key concept discussed in the material."
+        }
+      ],
+      "flashcards": [
+        {
+          "front": "Computer",
+          "back": "Important concept in Computer."
+        },
+        {
+          "front": "Science",
+          "back": "Important concept in Computer."
+        },
+        {
+          "front": "computers",
+          "back": "Important concept in Computer."
+        },
+        {
+          "front": "problems",
+          "back": "Important concept in Computer."
+        }
+      ],
+      "keyPoints": [
+        {
+          "id": 1,
+          "point": "Computer Science is the study of how computers work and how to use them to solve problems efficiently."
+        },
+        {
+          "id": 2,
+          "point": "It combines logic, creativity, and mathematics to design algorithms, build software, and analyze data."
+        },
+        {
+          "id": 3,
+          "point": "From artificial intelligence to cybersecurity, CS powers innovation and shapes the future of technology and human interaction."
+        }
+      ]
+    },
+    "features": [
+      "summary",
+      "quiz",
+      "keyPoints",
+      "flashcards"
+    ],
+    "timestamp": "2025-10-08T14:01:08.855Z",
+    "wordCount": 49
+  },
+  {
     "id": "1759803058531",
     "userId": "1759803022622",
     "originalText": "Machine learning is a subset of artificial intelligence that enables computers to learn from data without being explicitly programmed. It involves alg...",

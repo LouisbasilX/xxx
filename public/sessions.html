@@ -9,6 +9,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
+
+        
         * {
             margin: 0;
             padding: 0;
@@ -234,6 +236,106 @@
             background: rgba(239, 68, 68, 0.2);
             border-color: #ef4444;
         }
+
+        /* File upload styles */
+.file-drop-zone {
+    border: 2px dashed #4B5563;
+    transition: all 0.3s ease;
+}
+
+.file-drop-zone.active {
+    border-color: #3B82F6;
+    background-color: rgba(59, 130, 246, 0.05);
+}
+
+.file-drop-zone:hover {
+    border-color: #3B82F6;
+}
+
+/* Flashcard styles */
+.flashcard {
+    perspective: 1000px;
+    height: 200px;
+    cursor: pointer;
+}
+
+.flashcard-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.6s;
+    transform-style: preserve-3d;
+}
+
+.flashcard.flipped .flashcard-inner {
+    transform: rotateY(180deg);
+}
+
+.flashcard-front,
+.flashcard-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+}
+
+.flashcard-back {
+    transform: rotateY(180deg);
+}
+
+/* Quiz styles */
+.quiz-option {
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.quiz-option:hover {
+    background-color: rgba(75, 85, 99, 0.7);
+}
+
+.quiz-option.selected {
+    border-color: #3B82F6;
+}
+
+.quiz-option.correct {
+    border-color: #10B981;
+    background-color: rgba(16, 185, 129, 0.1);
+}
+
+.quiz-option.incorrect {
+    border-color: #EF4444;
+    background-color: rgba(239, 68, 68, 0.1);
+}
+
+/* Animations */
+.slide-in {
+    animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+/* Loading animation */
+.loading-spinner {
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
     </style>
 </head>
 <body class="min-h-screen">
@@ -397,7 +499,7 @@
         // Initialize page data
         function initializePage() {
             // Load user data from localStorage
-            const userData = JSON.parse(localStorage.getItem('userData') || '{}');
+            const userData = JSON.parse(localStorage.getItem('studyMateUser') || '{}');
             document.getElementById('nav-user-name').textContent = userData.name || 'Student';
 
             // Initialize feature selection
@@ -588,7 +690,7 @@
             showLoading();
             
             try {
-                const token = localStorage.getItem('authToken');
+                const token = localStorage.getItem('studyMateToken');
                 if (!token) {
                     throw new Error('Authentication required. Please log in again.');
                 }
